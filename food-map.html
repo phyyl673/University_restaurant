@@ -237,12 +237,13 @@ body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var
 .gtb-dot { width:26px; height:26px; border-radius:50%; border:2px solid var(--dark); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; margin-left:-5px; }
 
 /* map */
-.map-panel { position:relative; overflow:hidden; background:#E8E0D5; margin-top:48px; }
+.map-panel { position:relative; overflow:hidden; background:#E8E0D5; margin-top:48px; aspect-ratio:800/600; min-height:400px; }
 .map-bg { position:absolute; inset:0; width:100%; height:100%; }
 .solo-pin { position:absolute; transform:translate(-50%,-100%); cursor:pointer; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1); z-index:10; }
 .solo-pin:hover { transform:translate(-50%,-100%) scale(1.15); z-index:20; }
 .solo-pin .pin-bubble { border:2px solid transparent; }
 .solo-pin:hover .pin-bubble { border-color:var(--orange); }
+.r-pin { position:absolute; transform:translate(-50%,-100%); cursor:pointer; z-index:10; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
 .r-pin:hover { transform:translate(-50%,-100%) scale(1.2); z-index:20; }
 .pin-bubble { background:white; border-radius:12px; padding:6px 10px; box-shadow:0 4px 16px rgba(0,0,0,0.2); display:flex; align-items:center; gap:6px; white-space:nowrap; border:2px solid transparent; transition:border-color 0.2s; position:relative; }
 .pin-bubble::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:white; }
@@ -291,7 +292,7 @@ body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var
 .vote-card-emoji { font-size:28px; flex-shrink:0; }
 .vote-card-info { flex:1; }
 .vote-card-name { font-size:14px; font-weight:700; }
-.vote-card-meta { font-size:11px; color:var(--light); margin-top:2px; }
+.vote-card-meta { font-size:11px; color:var(--light); margin-top:2px; line-height:1.5; }
 .vote-count-wrap { display:flex; flex-direction:column; align-items:center; gap:2px; }
 .vote-count { font-size:20px; font-weight:900; color:var(--orange); line-height:1; }
 .vote-count.zero { color:var(--border); }
@@ -726,18 +727,19 @@ footer strong { color:rgba(255,255,255,0.8); }
       <text x="222" y="165" text-anchor="middle" font-size="10" fill="#A09080">大学路</text>
       <text x="120" y="195" font-size="10" fill="#A09080">学苑路</text>
     </svg>
-    <div class="range-circle" id="range-circle" style="width:320px;height:320px;left:310px;top:310px;"></div>
-    <!-- Restaurant pins -->
-    <div class="r-pin" id="pin-0" style="left:100px;top:460px" onclick="castVote(0)"><div class="pin-bubble"><span class="pin-emoji">🍜</span><div><div class="pin-name">黄焖鸡</div><div class="pin-dist">步行8分钟</div></div><div class="pin-votes zero" id="pv-0">0票</div></div></div>
-    <div class="r-pin" id="pin-1" style="left:200px;top:470px" onclick="castVote(1)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">川渝火锅</div><div class="pin-dist">步行15分钟</div></div><div class="pin-votes zero" id="pv-1">0票</div></div></div>
-    <div class="r-pin" id="pin-2" style="left:320px;top:455px" onclick="castVote(2)"><div class="pin-bubble"><span class="pin-emoji">🥗</span><div><div class="pin-name">轻食碗</div><div class="pin-dist">步行5分钟</div></div><div class="pin-votes zero" id="pv-2">0票</div></div></div>
-    <div class="r-pin" id="pin-3" style="left:460px;top:465px" onclick="castVote(3)"><div class="pin-bubble"><span class="pin-emoji">🍛</span><div><div class="pin-name">煲仔饭</div><div class="pin-dist">步行20分钟</div></div><div class="pin-votes zero" id="pv-3">0票</div></div></div>
-    <div class="r-pin" id="pin-4" style="left:580px;top:480px" onclick="castVote(4)"><div class="pin-bubble"><span class="pin-emoji">🍝</span><div><div class="pin-name">拉面馆</div><div class="pin-dist">步行12分钟</div></div><div class="pin-votes zero" id="pv-4">0票</div></div></div>
-    <!-- User pins -->
-    <div class="user-pin" style="left:285px;top:270px"><div class="user-dot" style="background:#E8450A"><div class="user-pulse" style="color:#E8450A"></div>我</div><div class="user-label">我 · A栋302</div></div>
-    <div class="user-pin" style="left:340px;top:240px"><div class="user-dot" style="background:#2980B9"><div class="user-pulse" style="color:#2980B9"></div>小</div><div class="user-label">小李 · A栋405</div></div>
-    <div class="user-pin" style="left:170px;top:300px"><div class="user-dot" style="background:#27AE60"><div class="user-pulse" style="color:#27AE60"></div>阿</div><div class="user-label">阿明 · B栋201</div></div>
-    <div class="user-pin" style="left:380px;top:280px"><div class="user-dot" style="background:#8E44AD"><div class="user-pulse" style="color:#8E44AD"></div>晓</div><div class="user-label">晓彤 · A栋108</div></div>
+    <div class="range-circle" id="range-circle" style="width:40%;height:53%;left:50%;top:50%;"></div>
+    <!-- Restaurant pins - 分布在美食街周围，使用百分比定位与地图坐标对应 -->
+    <div class="r-pin" id="pin-0" style="left:12.5%;top:80%;" onclick="castVote(0)"><div class="pin-bubble"><span class="pin-emoji">🍜</span><div><div class="pin-name">黄焖鸡</div><div class="pin-dist" data-rid="0">我8分</div></div><div class="pin-votes zero" id="pv-0">0票</div></div></div>
+    <div class="r-pin" id="pin-1" style="left:28%;top:82%;" onclick="castVote(1)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">川渝火锅</div><div class="pin-dist" data-rid="1">我15分</div></div><div class="pin-votes zero" id="pv-1">0票</div></div></div>
+    <div class="r-pin" id="pin-2" style="left:42%;top:78%;" onclick="castVote(2)"><div class="pin-bubble"><span class="pin-emoji">🥗</span><div><div class="pin-name">轻食碗</div><div class="pin-dist" data-rid="2">我5分</div></div><div class="pin-votes zero" id="pv-2">0票</div></div></div>
+    <div class="r-pin" id="pin-3" style="left:58%;top:79%;" onclick="castVote(3)"><div class="pin-bubble"><span class="pin-emoji">🍛</span><div><div class="pin-name">煲仔饭</div><div class="pin-dist" data-rid="3">我20分</div></div><div class="pin-votes zero" id="pv-3">0票</div></div></div>
+    <div class="r-pin" id="pin-4" style="left:73%;top:81%;" onclick="castVote(4)"><div class="pin-bubble"><span class="pin-emoji">🍝</span><div><div class="pin-name">拉面馆</div><div class="pin-dist" data-rid="4">我12分</div></div><div class="pin-votes zero" id="pv-4">0票</div></div></div>
+    <div class="r-pin" id="pin-5" style="left:88%;top:78%;" onclick="castVote(5)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">米线</div><div class="pin-dist" data-rid="5">我10分</div></div><div class="pin-votes zero" id="pv-5">0票</div></div></div>
+    <!-- User pins - 四人分散在不同宿舍区 -->
+    <div class="user-pin" style="left:38%;top:48%;"><div class="user-dot" style="background:#E8450A"><div class="user-pulse" style="color:#E8450A"></div>我</div><div class="user-label">我 · A栋322</div></div>
+    <div class="user-pin" style="left:45%;top:42%;"><div class="user-dot" style="background:#2980B9"><div class="user-pulse" style="color:#2980B9"></div>小</div><div class="user-label">小李 · A栋415</div></div>
+    <div class="user-pin" style="left:18%;top:52%;"><div class="user-dot" style="background:#27AE60"><div class="user-pulse" style="color:#27AE60"></div>阿</div><div class="user-label">阿明 · B栋201</div></div>
+    <div class="user-pin" style="left:32%;top:45%;"><div class="user-dot" style="background:#8E44AD"><div class="user-pulse" style="color:#8E44AD"></div>晓</div><div class="user-label">晓彤 · A栋106</div></div>
     <div class="map-controls">
       <button class="map-btn active" id="btn-range" onclick="toggleRange(this)">📏 显示步行范围</button>
       <button class="map-btn" onclick="showToast('已定位到你的位置 📍')">📍 我的位置</button>
@@ -902,13 +904,14 @@ footer strong { color:rgba(255,255,255,0.8); }
 
 <script>
 // ===== RESTAURANT DATA =====
+// distances: [我, 小李, 阿明, 晓彤] 到该餐厅的步行分钟数
 const restaurants = [
-  { name:'老码头黄焖鸡', emoji:'🍜', color:'c1', rating:4.8, dist:'步行8分钟', price:'¥22', discount:'出示学生证 · 米饭免费续', open:true, tags:['快出餐','有插座','安静','一人食'], crowd:'本校 342 人去过', dishes:[{emoji:'🍗',name:'黄焖鸡套餐',price:'¥18'},{emoji:'🥚',name:'溏心蛋',price:'¥3'},{emoji:'🍚',name:'炒饭',price:'¥8'}], reviews:[{name:'陈同学',school:'本校 · 数学院',text:'黄焖鸡超好吃！汤汁浇饭绝了，学生证免费加饭真的太贴心了。'},{name:'小李',school:'本校 · 软件工程',text:'离宿舍近，出餐很快，考试前经常来。'}] },
-  { name:'川渝老火锅', emoji:'🍲', color:'c2', rating:4.6, dist:'步行15分钟', price:'¥45', discount:'周一至周四 学生证享 9 折', open:true, tags:['聚餐首选','氛围感','辣'], crowd:'本校 208 人去过', dishes:[{emoji:'🥩',name:'肥牛卷',price:'¥28'},{emoji:'🫕',name:'鸳鸯锅底',price:'¥38'},{emoji:'🐄',name:'毛肚',price:'¥22'}], reviews:[{name:'王同学',school:'本校 · 经管学院',text:'辣度可以自选，朋友聚餐首选！服务员态度好，不催促。'},{name:'阿杰',school:'本校 · 机械工程',text:'学生证打折很实惠，环境也挺好的。'}] },
-  { name:'绿野鲜食轻食碗', emoji:'🥗', color:'c3', rating:4.7, dist:'步行5分钟', price:'¥28', discount:'关注公众号 · 首单立减 5 元', open:true, tags:['健康','轻食','拍照好看'], crowd:'本校 156 人去过', dishes:[{emoji:'🥗',name:'藜麦沙拉',price:'¥26'},{emoji:'🍱',name:'低卡饭团',price:'¥18'},{emoji:'🥤',name:'燕麦奶昔',price:'¥15'}], reviews:[{name:'小雨',school:'本校 · 医学院',text:'减肥期间救星！食材新鲜，量还挺多的，不会饿。'},{name:'晓彤',school:'邻校 · 艺术设计',text:'颜值超高，拍照发朋友圈必备哈哈，味道也不错。'}] },
-  { name:'深夜拉面馆', emoji:'🍝', color:'c4', rating:4.5, dist:'步行12分钟', price:'¥30', discount:'凌晨 0 点后 · 全单 8.5 折', open:true, tags:['深夜营业','暖胃','安静'], crowd:'本校 89 人去过', dishes:[{emoji:'🍜',name:'浓汤拉面',price:'¥26'},{emoji:'🥚',name:'温泉蛋',price:'¥5'},{emoji:'🍢',name:'炸串拼盘',price:'¥18'}], reviews:[{name:'夜猫子阿明',school:'本校 · 计算机',text:'复习到凌晨2点去吃，汤头超浓，暖到心里，老板人超好。'},{name:'小夏',school:'本校 · 建筑学',text:'赶图夜猫子的续命选择，深夜折扣很良心！'}] },
-  { name:'老广记煲仔饭', emoji:'🍛', color:'c5', rating:4.9, dist:'步行20分钟', price:'¥35', discount:'学生套餐：煲仔饭 + 例汤 ¥28', open:false, tags:['口碑第一','值得排队','粤式'], crowd:'本校 510 人去过', dishes:[{emoji:'🍛',name:'腊味煲仔饭',price:'¥32'},{emoji:'🥩',name:'滑鸡煲仔饭',price:'¥30'},{emoji:'🍵',name:'例汤',price:'¥8'}], reviews:[{name:'Kevin',school:'本校 · 金融学',text:'全校评分最高不是吹的！锅底锅巴超香，每次排队都值得。'},{name:'南南',school:'邻校 · 新闻学',text:'值得专门走过来，学生套餐性价比真的高，汤也很鲜。'}] },
-  { name:'来一碗米线', emoji:'🍲', color:'c6', rating:4.4, dist:'步行10分钟', price:'¥18', discount:'学生证 · 加汤免费', open:true, tags:['实惠','快','云南风味'], crowd:'本校 127 人去过', dishes:[{emoji:'🍲',name:'过桥米线',price:'¥16'},{emoji:'🌶',name:'红油米线',price:'¥14'},{emoji:'🥬',name:'卤蛋小菜',price:'¥4'}], reviews:[{name:'小张',school:'本校 · 化工学院',text:'月底穷的时候最爱来，又便宜又好吃，汤底很鲜。'},{name:'燕子',school:'本校 · 教育学院',text:'云南人表示这家还挺正宗的，比外面贵的那些好吃多了。'}] },
+  { name:'老码头黄焖鸡', emoji:'🍜', color:'c1', rating:4.8, dist:'步行8分钟', price:'¥22', distances:[8,12,15,6], discount:'出示学生证 · 米饭免费续', open:true, tags:['快出餐','有插座','安静','一人食'], crowd:'本校 342 人去过', dishes:[{emoji:'🍗',name:'黄焖鸡套餐',price:'¥18'},{emoji:'🥚',name:'溏心蛋',price:'¥3'},{emoji:'🍚',name:'炒饭',price:'¥8'}], reviews:[{name:'陈同学',school:'本校 · 数学院',text:'黄焖鸡超好吃！汤汁浇饭绝了，学生证免费加饭真的太贴心了。'},{name:'小李',school:'本校 · 软件工程',text:'离宿舍近，出餐很快，考试前经常来。'}] },
+  { name:'川渝老火锅', emoji:'🍲', color:'c2', rating:4.6, dist:'步行15分钟', price:'¥45', distances:[15,18,22,12], discount:'周一至周四 学生证享 9 折', open:true, tags:['聚餐首选','氛围感','辣'], crowd:'本校 208 人去过', dishes:[{emoji:'🥩',name:'肥牛卷',price:'¥28'},{emoji:'🫕',name:'鸳鸯锅底',price:'¥38'},{emoji:'🐄',name:'毛肚',price:'¥22'}], reviews:[{name:'王同学',school:'本校 · 经管学院',text:'辣度可以自选，朋友聚餐首选！服务员态度好，不催促。'},{name:'阿杰',school:'本校 · 机械工程',text:'学生证打折很实惠，环境也挺好的。'}] },
+  { name:'绿野鲜食轻食碗', emoji:'🥗', color:'c3', rating:4.7, dist:'步行5分钟', price:'¥28', distances:[5,8,12,4], discount:'关注公众号 · 首单立减 5 元', open:true, tags:['健康','轻食','拍照好看'], crowd:'本校 156 人去过', dishes:[{emoji:'🥗',name:'藜麦沙拉',price:'¥26'},{emoji:'🍱',name:'低卡饭团',price:'¥18'},{emoji:'🥤',name:'燕麦奶昔',price:'¥15'}], reviews:[{name:'小雨',school:'本校 · 医学院',text:'减肥期间救星！食材新鲜，量还挺多的，不会饿。'},{name:'晓彤',school:'邻校 · 艺术设计',text:'颜值超高，拍照发朋友圈必备哈哈，味道也不错。'}] },
+  { name:'深夜拉面馆', emoji:'🍝', color:'c4', rating:4.5, dist:'步行12分钟', price:'¥30', distances:[12,15,18,10], discount:'凌晨 0 点后 · 全单 8.5 折', open:true, tags:['深夜营业','暖胃','安静'], crowd:'本校 89 人去过', dishes:[{emoji:'🍜',name:'浓汤拉面',price:'¥26'},{emoji:'🥚',name:'温泉蛋',price:'¥5'},{emoji:'🍢',name:'炸串拼盘',price:'¥18'}], reviews:[{name:'夜猫子阿明',school:'本校 · 计算机',text:'复习到凌晨2点去吃，汤头超浓，暖到心里，老板人超好。'},{name:'小夏',school:'本校 · 建筑学',text:'赶图夜猫子的续命选择，深夜折扣很良心！'}] },
+  { name:'老广记煲仔饭', emoji:'🍛', color:'c5', rating:4.9, dist:'步行20分钟', price:'¥35', distances:[20,22,25,18], discount:'学生套餐：煲仔饭 + 例汤 ¥28', open:false, tags:['口碑第一','值得排队','粤式'], crowd:'本校 510 人去过', dishes:[{emoji:'🍛',name:'腊味煲仔饭',price:'¥32'},{emoji:'🥩',name:'滑鸡煲仔饭',price:'¥30'},{emoji:'🍵',name:'例汤',price:'¥8'}], reviews:[{name:'Kevin',school:'本校 · 金融学',text:'全校评分最高不是吹的！锅底锅巴超香，每次排队都值得。'},{name:'南南',school:'邻校 · 新闻学',text:'值得专门走过来，学生套餐性价比真的高，汤也很鲜。'}] },
+  { name:'来一碗米线', emoji:'🍲', color:'c6', rating:4.4, dist:'步行10分钟', price:'¥18', distances:[10,13,16,8], discount:'学生证 · 加汤免费', open:true, tags:['实惠','快','云南风味'], crowd:'本校 127 人去过', dishes:[{emoji:'🍲',name:'过桥米线',price:'¥16'},{emoji:'🌶',name:'红油米线',price:'¥14'},{emoji:'🥬',name:'卤蛋小菜',price:'¥4'}], reviews:[{name:'小张',school:'本校 · 化工学院',text:'月底穷的时候最爱来，又便宜又好吃，汤底很鲜。'},{name:'燕子',school:'本校 · 教育学院',text:'云南人表示这家还挺正宗的，比外面贵的那些好吃多了。'}] },
 ];
 
 // ===== GROUP DATA =====
@@ -1128,6 +1131,7 @@ function renderMembersVoteList() {
 function renderVoteList() {
   const maxVotes = Math.max(...gRestaurants.map(r=>r.votes.length), 1);
   const winnerIdx = gRestaurants.reduce((a,b,i,arr)=>arr[i].votes.length>arr[a].votes.length?i:a,0);
+  const distStr = (r) => r.distances ? members.map((m,mi)=>`${m.name}${r.distances[mi]}分`).join(' ') : r.dist;
   document.getElementById('vote-list').innerHTML = gRestaurants.map((r,i)=>{
     const isWinner = r.votes.length>0 && i===winnerIdx;
     const isMyVote = myVote===i;
@@ -1137,7 +1141,7 @@ function renderVoteList() {
       ${isWinner&&r.votes.length>0?'<div class="winner-badge">🏆 领先</div>':''}
       <div class="vote-card-top">
         <div class="vote-card-emoji">${r.emoji}</div>
-        <div class="vote-card-info"><div class="vote-card-name">${r.name}</div><div class="vote-card-meta">${r.dist} · 人均${r.price}</div></div>
+        <div class="vote-card-info"><div class="vote-card-name">${r.name}</div><div class="vote-card-meta">${distStr(r)} · 人均${r.price}</div></div>
         <div class="vote-count-wrap"><div class="vote-count ${r.votes.length===0?'zero':''}">${r.votes.length}</div><div class="vote-count-label">票</div></div>
       </div>
       <div class="vote-bar-wrap"><div class="vote-bar-track"><div class="vote-bar-fill" style="width:${r.votes.length===0?0:pct}%"></div></div></div>
@@ -1150,7 +1154,11 @@ function renderVoteList() {
     const el=document.getElementById(`pv-${i}`);
     if(el){el.textContent=r.votes.length+'票';el.className='pin-votes'+(r.votes.length===0?' zero':'');}
     const pin=document.getElementById(`pin-${i}`);
-    if(pin) pin.classList.toggle('voted',r.votes.length>0);
+    if(pin) {
+      pin.classList.toggle('voted',r.votes.length>0);
+      const distEl=pin.querySelector('.pin-dist');
+      if(distEl && r.distances) distEl.title=members.map((m,mi)=>`${m.name}：步行${r.distances[mi]}分钟`).join('\n');
+    }
   });
 }
 
@@ -1177,7 +1185,7 @@ function simulateVotes(myIdx) {
   });
   renderVoteList(); renderMembersVoteList();
   simTimeout = setTimeout(()=>{
-    const choice=Math.random()>0.5?myIdx:(myIdx+1)%5;
+    const choice=Math.random()>0.5?myIdx:(myIdx+1)%gRestaurants.length;
     members[2].voted=true; members[2].choice=choice; gRestaurants[choice].votes.push(2);
     addSystemMsg(`阿明 投票了 · ${gRestaurants[choice].name} ${gRestaurants[choice].emoji}`);
     addChatMsg(2, choice===myIdx?'我也投这家！':`我想吃${gRestaurants[choice].name}，感觉不错`);
