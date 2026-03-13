@@ -156,8 +156,8 @@ body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var
 .r-card { background:white; border-radius:20px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1); animation:fadeUp 0.5s ease both; }
 .r-card:hover { transform:translateY(-6px); box-shadow:0 20px 48px rgba(28,16,7,0.14); border-color:transparent; }
 .r-card:nth-child(1){animation-delay:0.05s} .r-card:nth-child(2){animation-delay:0.1s} .r-card:nth-child(3){animation-delay:0.15s} .r-card:nth-child(4){animation-delay:0.2s} .r-card:nth-child(5){animation-delay:0.25s} .r-card:nth-child(6){animation-delay:0.3s}
-.r-thumb { height:180px; display:flex; align-items:center; justify-content:center; font-size:64px; position:relative; overflow:hidden; }
-.r-thumb.c1{background:linear-gradient(135deg,#FF6B35,#E8450A)} .r-thumb.c2{background:linear-gradient(135deg,#C0392B,#96281B)} .r-thumb.c3{background:linear-gradient(135deg,#1A8C4E,#27AE60)} .r-thumb.c4{background:linear-gradient(135deg,#6C3FC4,#9B6BF2)} .r-thumb.c5{background:linear-gradient(135deg,#B7770D,#E6A817)} .r-thumb.c6{background:linear-gradient(135deg,#1A5276,#2980B9)}
+.r-thumb { height:180px; display:flex; align-items:center; justify-content:center; font-size:64px; position:relative; overflow:hidden; background-size:cover; background-position:center; }
+.r-thumb.c1{background-color:#FF6B35} .r-thumb.c2{background-color:#C0392B} .r-thumb.c3{background-color:#1A8C4E} .r-thumb.c4{background-color:#6C3FC4} .r-thumb.c5{background-color:#B7770D} .r-thumb.c6{background-color:#1A5276}
 .r-thumb-badges { position:absolute; top:12px; left:12px; right:12px; display:flex; justify-content:space-between; }
 .badge { padding:4px 10px; border-radius:8px; font-size:11px; font-weight:600; }
 .badge-deal{background:var(--yellow);color:var(--dark)} .badge-open{background:#2ECC71;color:white} .badge-closed{background:rgba(0,0,0,0.5);color:white}
@@ -237,13 +237,12 @@ body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var
 .gtb-dot { width:26px; height:26px; border-radius:50%; border:2px solid var(--dark); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; margin-left:-5px; }
 
 /* map */
-.map-panel { position:relative; overflow:hidden; background:#E8E0D5; margin-top:48px; aspect-ratio:800/600; min-height:400px; }
+.map-panel { position:relative; overflow:hidden; background:#E8E0D5; margin-top:48px; }
 .map-bg { position:absolute; inset:0; width:100%; height:100%; }
 .solo-pin { position:absolute; transform:translate(-50%,-100%); cursor:pointer; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1); z-index:10; }
 .solo-pin:hover { transform:translate(-50%,-100%) scale(1.15); z-index:20; }
 .solo-pin .pin-bubble { border:2px solid transparent; }
 .solo-pin:hover .pin-bubble { border-color:var(--orange); }
-.r-pin { position:absolute; transform:translate(-50%,-100%); cursor:pointer; z-index:10; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
 .r-pin:hover { transform:translate(-50%,-100%) scale(1.2); z-index:20; }
 .pin-bubble { background:white; border-radius:12px; padding:6px 10px; box-shadow:0 4px 16px rgba(0,0,0,0.2); display:flex; align-items:center; gap:6px; white-space:nowrap; border:2px solid transparent; transition:border-color 0.2s; position:relative; }
 .pin-bubble::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); border:4px solid transparent; border-top-color:white; }
@@ -292,7 +291,7 @@ body { font-family:'Noto Sans SC',sans-serif; background:var(--cream); color:var
 .vote-card-emoji { font-size:28px; flex-shrink:0; }
 .vote-card-info { flex:1; }
 .vote-card-name { font-size:14px; font-weight:700; }
-.vote-card-meta { font-size:11px; color:var(--light); margin-top:2px; line-height:1.5; }
+.vote-card-meta { font-size:11px; color:var(--light); margin-top:2px; }
 .vote-count-wrap { display:flex; flex-direction:column; align-items:center; gap:2px; }
 .vote-count { font-size:20px; font-weight:900; color:var(--orange); line-height:1; }
 .vote-count.zero { color:var(--border); }
@@ -370,7 +369,7 @@ footer strong { color:rgba(255,255,255,0.8); }
     <div class="nav-link" onclick="setNav(this);showDiscover()">发现好味道</div>
     <div class="nav-link" onclick="setNav(this);showMapScreen()">地图</div>
     <div class="nav-link" onclick="setNav(this);showGroupScreen()">一起约饭</div>
-    <div class="nav-link" onclick="setNav(this)">我的</div>
+    <div class="nav-link" onclick="setNav(this);showMyScreen()">我的</div>
   </div>
   <div class="nav-search" onclick="openSearch()">
     <span>🔍</span>
@@ -405,7 +404,7 @@ footer strong { color:rgba(255,255,255,0.8); }
 
 <!-- GROUP TOPBAR (shown when in group screen) -->
 <div class="group-topbar" id="group-topbar">
-  <div class="gtb-back" onclick="showHome()">← 返回首页</div>
+  <div class="gtb-back" onclick="goBack()">← 返回</div>
   <div class="gtb-sep">|</div>
   <div class="gtb-title">🍽 一起吃 · 多人约饭</div>
   <div class="gtb-right">
@@ -425,7 +424,7 @@ footer strong { color:rgba(255,255,255,0.8); }
       <div class="hero-left">
         <div class="hero-tag">🎓 专为大学生设计</div>
         <div class="hero-title">附近好吃的<br>都在<span class="accent">这里</span></div>
-        <div class="hero-sub">聚合大学城周边美食信息<br>学生口碑 · 真实优惠 · 快速决策</div>
+        <div class="hero-sub">聚合大学城周边美食信息<br>学生口碑 · 真实优惠 · 快速决策<br>陪你一起好好吃饭～</div>
         <div class="hero-scene-title">你现在的情况是？</div>
         <div class="hero-scenes">
           <div class="hero-scene active" onclick="filterScene(this,'全部')">🍽 全部</div>
@@ -507,28 +506,32 @@ footer strong { color:rgba(255,255,255,0.8); }
         <div class="sidebar-title">筛选条件</div>
         <div class="filter-group">
           <div class="filter-label">用餐场景</div>
-          <div class="filter-options">
-            <div class="filter-opt active" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>全部</div><div class="filter-count">6</div></div>
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>一人食</div><div class="filter-count">3</div></div>
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>多人聚餐</div><div class="filter-count">2</div></div>
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>深夜营业</div><div class="filter-count">1</div></div>
+          <div class="filter-options" id="scene-opts">
+            <div class="filter-opt active" data-scene="全部" onclick="selectScene(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>全部</div><div class="filter-count" id="cnt-all">8</div></div>
+            <div class="filter-opt" data-scene="一人食" onclick="selectScene(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>一人食</div><div class="filter-count">3</div></div>
+            <div class="filter-opt" data-scene="多人聚餐" onclick="selectScene(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>多人聚餐</div><div class="filter-count">2</div></div>
+            <div class="filter-opt" data-scene="深夜营业" onclick="selectScene(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>深夜营业</div><div class="filter-count">1</div></div>
           </div>
         </div>
         <div class="filter-group">
-          <div class="filter-label">人均价格</div>
-          <div class="price-range">
-            <button class="price-btn" onclick="togglePrice(this)">¥15以下</button>
-            <button class="price-btn active" onclick="togglePrice(this)">¥15-30</button>
-            <button class="price-btn" onclick="togglePrice(this)">¥30-50</button>
-            <button class="price-btn" onclick="togglePrice(this)">¥50+</button>
+          <div class="filter-label">人均价格 <span style="font-size:10px;color:var(--light);font-weight:400;">可多选</span></div>
+          <div class="price-range" id="price-opts">
+            <button class="price-btn" data-min="0" data-max="15" onclick="togglePrice(this)">¥15以下</button>
+            <button class="price-btn" data-min="15" data-max="30" onclick="togglePrice(this)">¥15-30</button>
+            <button class="price-btn" data-min="30" data-max="50" onclick="togglePrice(this)">¥30-50</button>
+            <button class="price-btn" data-min="50" data-max="999" onclick="togglePrice(this)">¥50+</button>
           </div>
         </div>
         <div class="filter-group" style="margin-bottom:0">
-          <div class="filter-label">口味偏好</div>
-          <div class="filter-options">
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🌶 能吃辣</div></div>
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🥗 轻食健康</div></div>
-            <div class="filter-opt" onclick="toggleFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🍖 肉食爱好者</div></div>
+          <div class="filter-label">菜系偏好 <span style="font-size:10px;color:var(--light);font-weight:400;">可多选</span></div>
+          <div class="filter-options" id="cuisine-opts">
+            <div class="filter-opt" data-cuisine="川湘" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🌶 川湘菜</div></div>
+            <div class="filter-opt" data-cuisine="粤" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🦆 粤菜</div></div>
+            <div class="filter-opt" data-cuisine="面食" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🍜 面食/米线</div></div>
+            <div class="filter-opt" data-cuisine="日料" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🍱 日料</div></div>
+            <div class="filter-opt" data-cuisine="轻食" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🥗 轻食健康</div></div>
+            <div class="filter-opt" data-cuisine="火锅" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>🍲 火锅/烤肉</div></div>
+            <div class="filter-opt" data-cuisine="咖啡" onclick="toggleCuisineFilter(this)"><div style="display:flex;align-items:center;gap:8px"><div class="dot"></div>☕ 咖啡甜品</div></div>
           </div>
         </div>
       </div>
@@ -567,7 +570,7 @@ footer strong { color:rgba(255,255,255,0.8); }
   <div style="max-width:1280px;margin:0 auto;padding:112px 40px 80px;">
     <!-- header -->
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
-      <button onclick="showHome()" style="background:none;border:none;color:var(--light);font-size:13px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;display:flex;align-items:center;gap:4px;">← 首页</button>
+      <button onclick="goBack()" style="background:none;border:none;color:var(--light);font-size:13px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;display:flex;align-items:center;gap:4px;">← 返回</button>
       <div style="color:var(--border);">/</div>
       <div style="font-size:13px;color:var(--mid);">发现好味道</div>
     </div>
@@ -666,7 +669,7 @@ footer strong { color:rgba(255,255,255,0.8); }
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
       <button onclick="showHome()" style="background:none;border:none;color:var(--light);font-size:13px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;">← 首页</button>
       <div style="color:var(--border);">/</div>
-      <button onclick="showDiscover()" style="background:none;border:none;color:var(--light);font-size:13px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;">发现好味道</button>
+      <button onclick="goBack()" style="background:none;border:none;color:var(--light);font-size:13px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;">← 返回</button>
       <div style="color:var(--border);">/</div>
       <div style="font-size:13px;color:var(--mid);font-weight:500;" id="topic-breadcrumb">本周最热</div>
     </div>
@@ -691,63 +694,85 @@ footer strong { color:rgba(255,255,255,0.8); }
 <div id="screen-group">
   <!-- MAP -->
   <div class="map-panel">
-    <svg class="map-bg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-      <rect width="800" height="600" fill="#E8E0D4"/>
-      <rect x="40" y="40" width="160" height="120" rx="6" fill="#D4C8B8" opacity="0.8"/>
-      <rect x="60" y="55" width="60" height="40" rx="3" fill="#C4B8A8"/>
-      <rect x="130" y="55" width="55" height="40" rx="3" fill="#C4B8A8"/>
-      <rect x="60" y="105" width="120" height="40" rx="3" fill="#C4B8A8"/>
-      <rect x="240" y="40" width="200" height="100" rx="6" fill="#C8D8B0" opacity="0.9"/>
-      <text x="340" y="98" text-anchor="middle" font-size="11" fill="#6A8A4A" font-weight="600">学生公寓 A 区</text>
-      <rect x="460" y="40" width="300" height="140" rx="6" fill="#D4C8B8" opacity="0.8"/>
-      <rect x="480" y="55" width="100" height="60" rx="3" fill="#C4B8A8"/>
-      <rect x="595" y="55" width="140" height="60" rx="3" fill="#C4B8A8"/>
-      <text x="610" y="125" text-anchor="middle" font-size="11" fill="#8A7A6A" font-weight="500">教学楼群</text>
-      <rect x="40" y="200" width="160" height="160" rx="6" fill="#C8D8B0" opacity="0.9"/>
-      <text x="120" y="285" text-anchor="middle" font-size="11" fill="#6A8A4A" font-weight="600">学生公寓 B 区</text>
-      <rect x="240" y="190" width="220" height="180" rx="8" fill="#D4E8D0" opacity="0.9"/>
-      <rect x="270" y="210" width="80" height="60" rx="4" fill="#B8D4B0"/>
-      <rect x="360" y="210" width="75" height="60" rx="4" fill="#B8D4B0"/>
-      <rect x="270" y="285" width="165" height="55" rx="4" fill="#B8D4B0"/>
-      <text x="352" y="345" text-anchor="middle" font-size="11" fill="#4A7A4A" font-weight="600">图书馆</text>
-      <rect x="490" y="200" width="270" height="170" rx="6" fill="#D4C8B8" opacity="0.8"/>
-      <rect x="510" y="215" width="110" height="130" rx="4" fill="#C4B8A8"/>
-      <rect x="635" y="215" width="105" height="60" rx="4" fill="#C4B8A8"/>
-      <rect x="635" y="285" width="105" height="60" rx="4" fill="#C4B8A8"/>
-      <rect x="40" y="410" width="340" height="150" rx="6" fill="#E8D4B8" opacity="0.9"/>
-      <text x="210" y="492" text-anchor="middle" font-size="13" fill="#8A6A3A" font-weight="700">美食街 🍜</text>
-      <rect x="410" y="420" width="350" height="130" rx="6" fill="#D4C8B8" opacity="0.8"/>
-      <rect x="210" y="0" width="24" height="600" fill="#F0E8DC" opacity="0.9"/>
-      <rect x="0" y="175" width="800" height="20" fill="#F0E8DC" opacity="0.9"/>
-      <rect x="0" y="390" width="800" height="22" fill="#F0E8DC" opacity="0.9"/>
-      <rect x="455" y="0" width="22" height="600" fill="#F0E8DC" opacity="0.9"/>
-      <line x1="222" y1="0" x2="222" y2="600" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
-      <line x1="0" y1="185" x2="800" y2="185" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
-      <line x1="0" y1="401" x2="800" y2="401" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
-      <text x="222" y="165" text-anchor="middle" font-size="10" fill="#A09080">大学路</text>
-      <text x="120" y="195" font-size="10" fill="#A09080">学苑路</text>
+    <svg id="group-map-svg" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;">
+
+      <!-- 底色 -->
+      <rect width="800" height="560" fill="#EDE5D8"/>
+
+      <!-- 道路 -->
+      <rect x="0" y="168" width="800" height="22" fill="#F5EFE6"/>
+      <rect x="200" y="0" width="22" height="560" fill="#F5EFE6"/>
+      <rect x="440" y="0" width="22" height="560" fill="#F5EFE6"/>
+      <rect x="0" y="380" width="800" height="22" fill="#F5EFE6"/>
+      <text x="211" y="158" text-anchor="middle" font-size="10" fill="#B0A090" font-family="Noto Sans SC,sans-serif">大学路</text>
+      <text x="100" y="188" text-anchor="middle" font-size="10" fill="#B0A090" font-family="Noto Sans SC,sans-serif">学苑路</text>
+
+      <!-- 宿舍A区 -->
+      <rect x="222" y="20" width="218" height="148" rx="8" fill="#D0DDB8" opacity="0.9"/>
+      <rect x="238" y="34" width="80" height="50" rx="4" fill="#BDD0A0"/>
+      <rect x="328" y="34" width="80" height="50" rx="4" fill="#BDD0A0"/>
+      <rect x="238" y="94" width="170" height="46" rx="4" fill="#BDD0A0"/>
+      <text x="331" y="154" text-anchor="middle" font-size="11" fill="#5A7A3A" font-weight="600" font-family="Noto Sans SC,sans-serif">学生公寓 A 区</text>
+
+      <!-- 教学楼群 -->
+      <rect x="462" y="20" width="318" height="148" rx="8" fill="#D4C8B8" opacity="0.85"/>
+      <rect x="478" y="34" width="110" height="68" rx="4" fill="#C4B8A8"/>
+      <rect x="600" y="34" width="160" height="68" rx="4" fill="#C4B8A8"/>
+      <rect x="478" y="112" width="282" height="36" rx="4" fill="#C4B8A8"/>
+      <text x="621" y="164" text-anchor="middle" font-size="11" fill="#7A6A5A" font-family="Noto Sans SC,sans-serif">教学楼群</text>
+
+      <!-- 宿舍B区 -->
+      <rect x="20" y="190" width="180" height="190" rx="8" fill="#D0DDB8" opacity="0.9"/>
+      <rect x="36" y="206" width="148" height="60" rx="4" fill="#BDD0A0"/>
+      <rect x="36" y="276" width="148" height="60" rx="4" fill="#BDD0A0"/>
+      <text x="110" y="356" text-anchor="middle" font-size="11" fill="#5A7A3A" font-weight="600" font-family="Noto Sans SC,sans-serif">学生公寓 B 区</text>
+
+      <!-- 图书馆 -->
+      <rect x="222" y="190" width="218" height="190" rx="8" fill="#D4ECD4" opacity="0.95"/>
+      <rect x="240" y="208" width="86" height="66" rx="4" fill="#B8D8B0"/>
+      <rect x="336" y="208" width="86" height="66" rx="4" fill="#B8D8B0"/>
+      <rect x="240" y="284" width="182" height="58" rx="4" fill="#B8D8B0"/>
+      <text x="331" y="362" text-anchor="middle" font-size="11" fill="#3A6A3A" font-weight="600" font-family="Noto Sans SC,sans-serif">图书馆</text>
+
+      <!-- 运动场 -->
+      <rect x="462" y="190" width="318" height="190" rx="8" fill="#D4C8B8" opacity="0.8"/>
+      <ellipse cx="621" cy="285" rx="120" ry="70" fill="none" stroke="#C4B8A8" stroke-width="2"/>
+      <text x="621" y="292" text-anchor="middle" font-size="11" fill="#8A7A6A" font-family="Noto Sans SC,sans-serif">运动场</text>
+
+      <!-- 美食街 -->
+      <rect x="20" y="402" width="420" height="138" rx="8" fill="#EED8B8" opacity="0.95"/>
+      <rect x="38" y="418" width="70" height="100" rx="4" fill="#E0C8A0"/>
+      <rect x="118" y="418" width="70" height="100" rx="4" fill="#E0C8A0"/>
+      <rect x="198" y="418" width="70" height="100" rx="4" fill="#E0C8A0"/>
+      <rect x="278" y="418" width="70" height="100" rx="4" fill="#E0C8A0"/>
+      <rect x="358" y="418" width="60" height="100" rx="4" fill="#E0C8A0"/>
+      <text x="220" y="475" text-anchor="middle" font-size="13" fill="#7A5A2A" font-weight="700" font-family="Noto Sans SC,sans-serif">美食街</text>
+
+      <!-- 右下区域 -->
+      <rect x="462" y="402" width="318" height="138" rx="8" fill="#D4C8B8" opacity="0.75"/>
+      <text x="621" y="478" text-anchor="middle" font-size="11" fill="#9A8A7A" font-family="Noto Sans SC,sans-serif">商业区</text>
+
+      <!-- 距离连线层 (动态，JS写入) -->
+      <g id="distance-lines"></g>
+
+      <!-- 餐厅标记层 -->
+      <g id="restaurant-markers"></g>
+
+      <!-- 用户标记层 -->
+      <g id="user-markers"></g>
+
+      <!-- 步行范围圈 - 以"我"为圆心 -->
+      <circle id="range-circle-svg" cx="300" cy="255" r="160" fill="rgba(232,69,10,0.04)" stroke="rgba(232,69,10,0.28)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
     </svg>
-    <div class="range-circle" id="range-circle" style="width:40%;height:53%;left:50%;top:50%;"></div>
-    <!-- Restaurant pins - 分布在美食街周围，使用百分比定位与地图坐标对应 -->
-    <div class="r-pin" id="pin-0" style="left:12.5%;top:80%;" onclick="castVote(0)"><div class="pin-bubble"><span class="pin-emoji">🍜</span><div><div class="pin-name">黄焖鸡</div><div class="pin-dist" data-rid="0">我8分</div></div><div class="pin-votes zero" id="pv-0">0票</div></div></div>
-    <div class="r-pin" id="pin-1" style="left:28%;top:82%;" onclick="castVote(1)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">川渝火锅</div><div class="pin-dist" data-rid="1">我15分</div></div><div class="pin-votes zero" id="pv-1">0票</div></div></div>
-    <div class="r-pin" id="pin-2" style="left:42%;top:78%;" onclick="castVote(2)"><div class="pin-bubble"><span class="pin-emoji">🥗</span><div><div class="pin-name">轻食碗</div><div class="pin-dist" data-rid="2">我5分</div></div><div class="pin-votes zero" id="pv-2">0票</div></div></div>
-    <div class="r-pin" id="pin-3" style="left:58%;top:79%;" onclick="castVote(3)"><div class="pin-bubble"><span class="pin-emoji">🍛</span><div><div class="pin-name">煲仔饭</div><div class="pin-dist" data-rid="3">我20分</div></div><div class="pin-votes zero" id="pv-3">0票</div></div></div>
-    <div class="r-pin" id="pin-4" style="left:73%;top:81%;" onclick="castVote(4)"><div class="pin-bubble"><span class="pin-emoji">🍝</span><div><div class="pin-name">拉面馆</div><div class="pin-dist" data-rid="4">我12分</div></div><div class="pin-votes zero" id="pv-4">0票</div></div></div>
-    <div class="r-pin" id="pin-5" style="left:88%;top:78%;" onclick="castVote(5)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">米线</div><div class="pin-dist" data-rid="5">我10分</div></div><div class="pin-votes zero" id="pv-5">0票</div></div></div>
-    <!-- User pins - 四人分散在不同宿舍区 -->
-    <div class="user-pin" style="left:38%;top:48%;"><div class="user-dot" style="background:#E8450A"><div class="user-pulse" style="color:#E8450A"></div>我</div><div class="user-label">我 · A栋322</div></div>
-    <div class="user-pin" style="left:45%;top:42%;"><div class="user-dot" style="background:#2980B9"><div class="user-pulse" style="color:#2980B9"></div>小</div><div class="user-label">小李 · A栋415</div></div>
-    <div class="user-pin" style="left:18%;top:52%;"><div class="user-dot" style="background:#27AE60"><div class="user-pulse" style="color:#27AE60"></div>阿</div><div class="user-label">阿明 · B栋201</div></div>
-    <div class="user-pin" style="left:32%;top:45%;"><div class="user-dot" style="background:#8E44AD"><div class="user-pulse" style="color:#8E44AD"></div>晓</div><div class="user-label">晓彤 · A栋106</div></div>
+
     <div class="map-controls">
-      <button class="map-btn active" id="btn-range" onclick="toggleRange(this)">📏 显示步行范围</button>
-      <button class="map-btn" onclick="showToast('已定位到你的位置 📍')">📍 我的位置</button>
-      <button class="map-btn" onclick="showToast('正在同步成员位置...')">👥 同步位置</button>
+      <button class="map-btn active" id="btn-range" onclick="toggleRange(this)">📏 步行范围</button>
+      <button class="map-btn" onclick="showToast('已同步成员位置 👥')">👥 同步位置</button>
     </div>
     <div class="map-legend">
       <div class="legend-title">图例</div>
-      <div class="legend-row"><div class="legend-dot" style="background:#E8450A"></div>我的位置</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#E8450A"></div>我</div>
       <div class="legend-row"><div class="legend-dot" style="background:#2980B9"></div>小李</div>
       <div class="legend-row"><div class="legend-dot" style="background:#27AE60"></div>阿明</div>
       <div class="legend-row"><div class="legend-dot" style="background:#8E44AD"></div>晓彤</div>
@@ -777,13 +802,225 @@ footer strong { color:rgba(255,255,255,0.8); }
   </div>
 </div>
 
+<!-- ===== MY SCREEN ===== -->
+<div class="screen" id="screen-my">
+  <div style="max-width:960px;margin:0 auto;padding:112px 40px 80px;">
+
+    <!-- Profile Card -->
+    <div style="background:linear-gradient(135deg,#1C1007,#3D2410);border-radius:24px;padding:36px 40px;display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;margin-bottom:24px;">
+      <div style="position:relative;">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#E8450A,#FF6B35);display:flex;align-items:center;justify-content:center;font-size:36px;border:3px solid rgba(255,255,255,0.2);">🧑</div>
+        <div style="position:absolute;bottom:2px;right:2px;width:20px;height:20px;background:#27AE60;border-radius:50%;border:2px solid #1C1007;"></div>
+      </div>
+      <div>
+        <div style="font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:white;letter-spacing:-0.5px;">同学小觅</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:5px;">计算机学院 · 大二 · <span style="color:rgba(255,255,255,0.8);">A栋302室</span></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);padding:4px 12px;border-radius:12px;font-size:12px;">🎓 已绑定学生证</div>
+          <div style="background:rgba(232,69,10,0.3);border:1px solid rgba(232,69,10,0.5);color:#FF8C5A;padding:4px 12px;border-radius:12px;font-size:12px;">🔥 打卡达人</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;text-align:center;">
+        <div>
+          <div style="font-size:28px;font-weight:900;color:white;font-family:'Noto Serif SC',serif;">12</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px;">已打卡</div>
+        </div>
+        <div style="border-left:1px solid rgba(255,255,255,0.1);border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:28px;font-weight:900;color:white;font-family:'Noto Serif SC',serif;">8</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px;">已收藏</div>
+        </div>
+        <div>
+          <div style="font-size:28px;font-weight:900;color:white;font-family:'Noto Serif SC',serif;">5</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px;">写过评价</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;">
+
+      <!-- LEFT COL -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- 当前位置 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">📍 我现在在哪</div>
+          <div style="font-size:12px;color:var(--light);margin-bottom:14px;">选择出发地，距离实时更新</div>
+
+          <!-- 自动定位 -->
+          <div id="loc-auto" onclick="selectLocation(this,'自动定位')" style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:1.5px solid var(--orange);background:#FEF0EA;cursor:pointer;margin-bottom:10px;transition:all 0.15s;">
+            <span style="font-size:16px;">🛰</span>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--orange);">自动定位</div>
+              <div style="font-size:11px;color:var(--orange);opacity:0.7;">当前：图书馆附近 ✓</div>
+            </div>
+            <div style="width:16px;height:16px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;">
+              <div style="width:6px;height:6px;border-radius:50%;background:white;"></div>
+            </div>
+          </div>
+
+          <!-- 常用地点 -->
+          <div style="font-size:11px;color:var(--light);margin-bottom:8px;padding-left:2px;">常用地点</div>
+          <div style="display:flex;flex-direction:column;gap:6px;" id="loc-btns">
+            <div onclick="selectLocation(this,'A栋宿舍')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.classList.contains('loc-active'))this.style.borderColor='var(--border)'">
+              <span style="font-size:15px;">🏠</span>
+              <div style="flex:1;font-size:13px;color:var(--dark);">A栋宿舍</div>
+              <div style="font-size:11px;color:var(--light);">步行基准地</div>
+            </div>
+            <div onclick="selectLocation(this,'图书馆')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.classList.contains('loc-active'))this.style.borderColor='var(--border)'">
+              <span style="font-size:15px;">📚</span>
+              <div style="flex:1;font-size:13px;color:var(--dark);">图书馆</div>
+              <div style="font-size:11px;color:var(--light);">常去</div>
+            </div>
+            <div onclick="selectLocation(this,'教学楼')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.classList.contains('loc-active'))this.style.borderColor='var(--border)'">
+              <span style="font-size:15px;">🏫</span>
+              <div style="flex:1;font-size:13px;color:var(--dark);">教学楼</div>
+              <div style="font-size:11px;color:var(--light);">上课时用</div>
+            </div>
+            <div onclick="selectLocation(this,'运动场')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.classList.contains('loc-active'))this.style.borderColor='var(--border)'">
+              <span style="font-size:15px;">⚽</span>
+              <div style="flex:1;font-size:13px;color:var(--dark);">运动场</div>
+              <div style="font-size:11px;color:var(--light);">运动后必吃</div>
+            </div>
+          </div>
+
+          <!-- 底部提示 -->
+          <div style="background:var(--cream);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--mid);margin-top:12px;" id="loc-hint">
+            🛰 正在用 <strong>自动定位</strong> 计算距离
+          </div>
+        </div>
+
+        <!-- 菜系偏好 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">🍽 菜系偏好</div>
+          <div style="font-size:12px;color:var(--light);margin-bottom:14px;">选你喜欢的，推荐更精准</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--orange);background:#FEF0EA;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🌶</span><div><div style="font-size:12px;font-weight:600;color:var(--orange);">川湘菜</div><div style="font-size:10px;color:var(--orange);opacity:0.7;">麻辣鲜香</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🦆</span><div><div style="font-size:12px;font-weight:600;color:var(--dark);">粤菜</div><div style="font-size:10px;color:var(--light);">清淡鲜美</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--orange);background:#FEF0EA;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🍜</span><div><div style="font-size:12px;font-weight:600;color:var(--orange);">面食/米线</div><div style="font-size:10px;color:var(--orange);opacity:0.7;">主食控</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🍱</span><div><div style="font-size:12px;font-weight:600;color:var(--dark);">日料</div><div style="font-size:10px;color:var(--light);">寿司·拉面</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🥗</span><div><div style="font-size:12px;font-weight:600;color:var(--dark);">轻食健康</div><div style="font-size:10px;color:var(--light);">沙拉·低卡</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🍔</span><div><div style="font-size:12px;font-weight:600;color:var(--dark);">西式快餐</div><div style="font-size:10px;color:var(--light);">汉堡·披萨</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--orange);background:#FEF0EA;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">🍲</span><div><div style="font-size:12px;font-weight:600;color:var(--orange);">火锅/烤肉</div><div style="font-size:10px;color:var(--orange);opacity:0.7;">聚餐首选</div></div>
+            </div>
+            <div onclick="toggleCuisine(this)" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);background:white;cursor:pointer;transition:all 0.15s;">
+              <span style="font-size:18px;">☕</span><div><div style="font-size:12px;font-weight:600;color:var(--dark);">咖啡/甜品</div><div style="font-size:10px;color:var(--light);">下午茶</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 预算 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;">💰 预算偏好</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div onclick="selectBudget(this)" style="padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;color:var(--mid);display:flex;justify-content:space-between;align-items:center;">¥15 以下<span style="font-size:11px;color:var(--light);">穷鬼套餐</span></div>
+            <div onclick="selectBudget(this)" style="padding:10px 14px;border-radius:12px;border:1.5px solid var(--orange);background:#FEF0EA;cursor:pointer;font-size:13px;color:var(--orange);font-weight:600;display:flex;justify-content:space-between;align-items:center;">¥15 - 30 ✓<span style="font-size:11px;color:var(--orange);opacity:0.7;">日常首选</span></div>
+            <div onclick="selectBudget(this)" style="padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;color:var(--mid);display:flex;justify-content:space-between;align-items:center;">¥30 - 50<span style="font-size:11px;color:var(--light);">偶尔放纵</span></div>
+            <div onclick="selectBudget(this)" style="padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;font-size:13px;color:var(--mid);display:flex;justify-content:space-between;align-items:center;">¥50+<span style="font-size:11px;color:var(--light);">犒劳自己</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COL -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- 我的收藏 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;">❤️ 我的收藏</div>
+            <div style="font-size:12px;color:var(--orange);cursor:pointer;">查看全部 →</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" id="fav-grid">
+            <!-- filled by JS -->
+          </div>
+          <div style="text-align:center;padding:20px;color:var(--light);font-size:13px;display:none;" id="fav-empty">还没有收藏，去逛逛吧 →</div>
+        </div>
+
+        <!-- 打卡记录 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;">📍 打卡记录</div>
+            <div style="font-size:12px;color:var(--light);">最近30天</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div onclick="openModal(4)" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:14px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='#FEF0EA'" onmouseout="this.style.background='var(--cream)'">
+              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#B7770D,#F5C518);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🍛</div>
+              <div style="flex:1;"><div style="font-size:14px;font-weight:600;">老广记煲仔饭</div><div style="font-size:11px;color:var(--light);margin-top:2px;">3天前 · 人均¥35 · 和小李、阿明</div></div>
+              <div style="font-size:20px;color:var(--yellow);">★★★★★</div>
+            </div>
+            <div onclick="openModal(0)" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:14px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='#FEF0EA'" onmouseout="this.style.background='var(--cream)'">
+              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#FF6B35,#E8450A);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🍜</div>
+              <div style="flex:1;"><div style="font-size:14px;font-weight:600;">老码头黄焖鸡</div><div style="font-size:11px;color:var(--light);margin-top:2px;">1周前 · 人均¥22 · 一个人</div></div>
+              <div style="font-size:20px;color:var(--yellow);">★★★★☆</div>
+            </div>
+            <div onclick="openModal(3)" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:14px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='#FEF0EA'" onmouseout="this.style.background='var(--cream)'">
+              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6C3FC4,#9B6BF2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🍝</div>
+              <div style="flex:1;"><div style="font-size:14px;font-weight:600;">深夜拉面馆</div><div style="font-size:11px;color:var(--light);margin-top:2px;">2周前 · 人均¥30 · 复习到凌晨</div></div>
+              <div style="font-size:20px;color:var(--yellow);">★★★★★</div>
+            </div>
+            <div onclick="openModal(2)" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:14px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='#FEF0EA'" onmouseout="this.style.background='var(--cream)'">
+              <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#1A8C4E,#27AE60);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🥗</div>
+              <div style="flex:1;"><div style="font-size:14px;font-weight:600;">绿野鲜食轻食碗</div><div style="font-size:11px;color:var(--light);margin-top:2px;">3周前 · 人均¥28 · 减脂期</div></div>
+              <div style="font-size:20px;color:var(--yellow);">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 约饭小组 -->
+        <div style="background:white;border-radius:20px;padding:22px;border:1px solid var(--border);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);letter-spacing:1.5px;text-transform:uppercase;">👥 常约饭的人</div>
+            <div style="font-size:12px;color:var(--orange);cursor:pointer;" onclick="showGroupScreen()">发起约饭 →</div>
+          </div>
+          <div style="display:flex;gap:16px;">
+            <div style="text-align:center;cursor:pointer;" onclick="showGroupScreen()">
+              <div style="width:52px;height:52px;border-radius:50%;background:#2980B9;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;margin:0 auto 6px;">小</div>
+              <div style="font-size:11px;color:var(--mid);">小李</div>
+              <div style="font-size:10px;color:var(--light);">约过8次</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;" onclick="showGroupScreen()">
+              <div style="width:52px;height:52px;border-radius:50%;background:#27AE60;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;margin:0 auto 6px;">阿</div>
+              <div style="font-size:11px;color:var(--mid);">阿明</div>
+              <div style="font-size:10px;color:var(--light);">约过5次</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;" onclick="showGroupScreen()">
+              <div style="width:52px;height:52px;border-radius:50%;background:#8E44AD;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;margin:0 auto 6px;">晓</div>
+              <div style="font-size:11px;color:var(--mid);">晓彤</div>
+              <div style="font-size:10px;color:var(--light);">约过3次</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;" onclick="showToast('邀请好友功能即将上线 👀')">
+              <div style="width:52px;height:52px;border-radius:50%;background:var(--border);border:2px dashed var(--light);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 6px;">+</div>
+              <div style="font-size:11px;color:var(--light);">邀请好友</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- DETAIL MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
   <div class="modal">
-    <div class="modal-hero c1" id="modal-hero">
-      <button class="modal-fav" id="modal-fav" onclick="toggleFav()">🤍</button>
-      <span id="modal-emoji">🍜</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-hero c1" id="modal-hero" style="position:relative;overflow:hidden;">
+      <img id="modal-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;" onerror="this.style.display='none'">
+      <button class="modal-fav" id="modal-fav" onclick="toggleFav()" style="position:relative;z-index:2;">🤍</button>
+      <span id="modal-emoji" style="position:relative;z-index:2;">🍜</span>
+      <button class="modal-close" onclick="closeModal()" style="position:relative;z-index:2;">✕</button>
     </div>
     <div class="modal-body">
       <div class="modal-top">
@@ -798,7 +1035,7 @@ footer strong { color:rgba(255,255,255,0.8); }
         </div>
         <div class="modal-actions">
           <button class="action-btn primary">📱 一键外卖</button>
-          <button class="action-btn secondary">📍 导航过去</button>
+          <button class="action-btn secondary" onclick="startNavTo(currentModal)">📍 导航过去</button>
         </div>
       </div>
       <div class="deal-box"><div class="deal-icon">🎉</div><div><div class="deal-label">学生专属优惠</div><div class="deal-text" id="modal-deal"></div></div></div>
@@ -815,40 +1052,34 @@ footer strong { color:rgba(255,255,255,0.8); }
 <!-- ===== SOLO MAP SCREEN ===== -->
 <div class="screen" id="screen-map" style="position:fixed;inset:0;top:64px;z-index:500;display:none;flex-direction:column;">
   <div style="height:48px;background:var(--dark);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;" id="map-topbar">
-    <div style="color:rgba(255,255,255,0.6);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;" onclick="showHome()">← 返回首页</div>
+    <div style="color:rgba(255,255,255,0.6);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;" onclick="goBack()">← 返回</div>
     <div style="color:rgba(255,255,255,0.2)">|</div>
-    <div style="color:white;font-size:14px;font-weight:600;">🗺️ 周边地图</div>
+    <div style="color:white;font-size:14px;font-weight:600;" id="map-topbar-title">🗺️ 周边地图</div>
     <div style="margin-left:auto;display:flex;gap:10px;">
       <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);padding:4px 14px;border-radius:16px;font-size:12px;">📍 我的位置已定位</div>
-      <div style="background:var(--orange);color:white;padding:4px 14px;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;" onclick="showToast('已切换至500m范围')">500m · 步行可达</div>
+      <div id="nav-cancel-btn" style="display:none;background:#E8450A;color:white;padding:4px 14px;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;" onclick="cancelNav()">✕ 退出导航</div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 320px;flex:1;overflow:hidden;">
-    <!-- MAP -->
+    <!-- MAP SVG -->
     <div style="position:relative;overflow:hidden;background:#E8E0D5;">
-      <svg style="position:absolute;inset:0;" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+      <svg id="solo-map-svg" style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <!-- base map -->
         <rect width="800" height="600" fill="#E8E0D4"/>
         <rect x="40" y="40" width="160" height="120" rx="6" fill="#D4C8B8" opacity="0.8"/>
-        <rect x="60" y="55" width="60" height="40" rx="3" fill="#C4B8A8"/>
-        <rect x="130" y="55" width="55" height="40" rx="3" fill="#C4B8A8"/>
-        <rect x="60" y="105" width="120" height="40" rx="3" fill="#C4B8A8"/>
+        <rect x="60" y="55" width="60" height="40" rx="3" fill="#C4B8A8"/><rect x="130" y="55" width="55" height="40" rx="3" fill="#C4B8A8"/><rect x="60" y="105" width="120" height="40" rx="3" fill="#C4B8A8"/>
         <rect x="240" y="40" width="200" height="100" rx="6" fill="#C8D8B0" opacity="0.9"/>
         <text x="340" y="98" text-anchor="middle" font-size="11" fill="#6A8A4A" font-weight="600">学生公寓 A 区</text>
         <rect x="460" y="40" width="300" height="140" rx="6" fill="#D4C8B8" opacity="0.8"/>
-        <rect x="480" y="55" width="100" height="60" rx="3" fill="#C4B8A8"/>
-        <rect x="595" y="55" width="140" height="60" rx="3" fill="#C4B8A8"/>
+        <rect x="480" y="55" width="100" height="60" rx="3" fill="#C4B8A8"/><rect x="595" y="55" width="140" height="60" rx="3" fill="#C4B8A8"/>
         <text x="610" y="125" text-anchor="middle" font-size="11" fill="#8A7A6A">教学楼群</text>
         <rect x="40" y="200" width="160" height="160" rx="6" fill="#C8D8B0" opacity="0.9"/>
         <text x="120" y="285" text-anchor="middle" font-size="11" fill="#6A8A4A" font-weight="600">学生公寓 B 区</text>
         <rect x="240" y="190" width="220" height="180" rx="8" fill="#D4E8D0" opacity="0.9"/>
-        <rect x="270" y="210" width="80" height="60" rx="4" fill="#B8D4B0"/>
-        <rect x="360" y="210" width="75" height="60" rx="4" fill="#B8D4B0"/>
-        <rect x="270" y="285" width="165" height="55" rx="4" fill="#B8D4B0"/>
+        <rect x="270" y="210" width="80" height="60" rx="4" fill="#B8D4B0"/><rect x="360" y="210" width="75" height="60" rx="4" fill="#B8D4B0"/><rect x="270" y="285" width="165" height="55" rx="4" fill="#B8D4B0"/>
         <text x="352" y="345" text-anchor="middle" font-size="11" fill="#4A7A4A" font-weight="600">图书馆</text>
         <rect x="490" y="200" width="270" height="170" rx="6" fill="#D4C8B8" opacity="0.8"/>
-        <rect x="510" y="215" width="110" height="130" rx="4" fill="#C4B8A8"/>
-        <rect x="635" y="215" width="105" height="60" rx="4" fill="#C4B8A8"/>
-        <rect x="635" y="285" width="105" height="60" rx="4" fill="#C4B8A8"/>
+        <rect x="510" y="215" width="110" height="130" rx="4" fill="#C4B8A8"/><rect x="635" y="215" width="105" height="60" rx="4" fill="#C4B8A8"/><rect x="635" y="285" width="105" height="60" rx="4" fill="#C4B8A8"/>
         <rect x="40" y="410" width="340" height="150" rx="6" fill="#E8D4B8" opacity="0.9"/>
         <text x="210" y="492" text-anchor="middle" font-size="13" fill="#8A6A3A" font-weight="700">美食街 🍜</text>
         <rect x="410" y="420" width="350" height="130" rx="6" fill="#D4C8B8" opacity="0.8"/>
@@ -856,32 +1087,40 @@ footer strong { color:rgba(255,255,255,0.8); }
         <rect x="0" y="175" width="800" height="20" fill="#F0E8DC" opacity="0.9"/>
         <rect x="0" y="390" width="800" height="22" fill="#F0E8DC" opacity="0.9"/>
         <rect x="455" y="0" width="22" height="600" fill="#F0E8DC" opacity="0.9"/>
-        <line x1="222" y1="0" x2="222" y2="600" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
-        <line x1="0" y1="185" x2="800" y2="185" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
-        <line x1="0" y1="401" x2="800" y2="401" stroke="#D8D0C4" stroke-width="1" stroke-dasharray="8,8"/>
         <text x="222" y="165" text-anchor="middle" font-size="10" fill="#A09080">大学路</text>
         <text x="120" y="195" font-size="10" fill="#A09080">学苑路</text>
+
+        <!-- 步行范围圈 -->
+        <circle cx="310" cy="310" r="160" fill="rgba(232,69,10,0.04)" stroke="rgba(232,69,10,0.25)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+        <!-- 导航路径层（JS写入） -->
+        <g id="nav-path-layer"></g>
+
+        <!-- 餐厅pin层（JS写入） -->
+        <g id="solo-restaurant-markers"></g>
+
+        <!-- 我的位置 -->
+        <g transform="translate(310,310)">
+          <circle r="22" fill="#E8450A" opacity="0.15">
+            <animate attributeName="r" values="18;28;18" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="18" fill="#E8450A" stroke="white" stroke-width="3"/>
+          <text text-anchor="middle" y="6" font-size="11" font-weight="700" fill="white" font-family="Noto Sans SC,sans-serif">我</text>
+          <rect x="-22" y="-40" width="44" height="16" rx="5" fill="#1C1007"/>
+          <text text-anchor="middle" y="-29" font-size="8" fill="white" font-family="Noto Sans SC,sans-serif">📍 我在这里</text>
+        </g>
       </svg>
 
-      <!-- 步行范围圈 -->
-      <div style="position:absolute;width:320px;height:320px;left:310px;top:310px;border-radius:50%;border:1.5px dashed rgba(232,69,10,0.35);background:rgba(232,69,10,0.05);pointer-events:none;transform:translate(-50%,-50%);"></div>
-
-      <!-- 我的位置 -->
-      <div style="position:absolute;left:310px;top:310px;transform:translate(-50%,-50%);z-index:15;">
-        <div style="width:42px;height:42px;border-radius:50%;background:#E8450A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:white;box-shadow:0 0 0 5px rgba(232,69,10,0.25),0 4px 12px rgba(0,0,0,0.3);position:relative;">
-          <div style="position:absolute;inset:-6px;border-radius:50%;border:2px solid #E8450A;opacity:0.4;animation:pulse 2s ease infinite;"></div>
-          我
+      <!-- 导航信息浮层 -->
+      <div id="nav-banner" style="display:none;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:12px 24px;border-radius:16px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);display:none;align-items:center;gap:12px;white-space:nowrap;">
+        <span id="nav-banner-icon" style="font-size:20px;">🍜</span>
+        <div>
+          <div id="nav-banner-name" style="font-weight:700;">目的地</div>
+          <div id="nav-banner-meta" style="font-size:11px;opacity:0.7;margin-top:2px;">步行约X分钟 · XXm</div>
         </div>
-        <div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:var(--dark);color:white;padding:3px 10px;border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap;">📍 我在这里</div>
+        <div style="background:var(--orange);padding:6px 14px;border-radius:10px;font-size:12px;cursor:pointer;" onclick="showToast('模拟导航：已规划最优路线 🧭')">开始导航</div>
       </div>
-
-      <!-- Restaurant pins solo -->
-      <div class="solo-pin" style="left:100px;top:460px" onclick="showSoloCard(0)"><div class="pin-bubble"><span class="pin-emoji">🍜</span><div><div class="pin-name">黄焖鸡</div><div class="pin-dist">步行8分钟</div></div></div></div>
-      <div class="solo-pin" style="left:200px;top:470px" onclick="showSoloCard(1)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">川渝火锅</div><div class="pin-dist">步行15分钟</div></div></div></div>
-      <div class="solo-pin" style="left:320px;top:455px" onclick="showSoloCard(2)"><div class="pin-bubble"><span class="pin-emoji">🥗</span><div><div class="pin-name">轻食碗</div><div class="pin-dist">步行5分钟</div></div></div></div>
-      <div class="solo-pin" style="left:460px;top:465px" onclick="showSoloCard(4)"><div class="pin-bubble"><span class="pin-emoji">🍛</span><div><div class="pin-name">煲仔饭</div><div class="pin-dist">步行20分钟</div></div></div></div>
-      <div class="solo-pin" style="left:580px;top:480px" onclick="showSoloCard(3)"><div class="pin-bubble"><span class="pin-emoji">🍝</span><div><div class="pin-name">拉面馆</div><div class="pin-dist">步行12分钟</div></div></div></div>
-      <div class="solo-pin" style="left:700px;top:460px" onclick="showSoloCard(5)"><div class="pin-bubble"><span class="pin-emoji">🍲</span><div><div class="pin-name">米线</div><div class="pin-dist">步行10分钟</div></div></div></div>
 
       <!-- map controls -->
       <div style="position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:8px;z-index:20;">
@@ -895,7 +1134,7 @@ footer strong { color:rgba(255,255,255,0.8); }
     <div style="background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border);">
         <div style="font-size:16px;font-weight:700;">📍 附近餐厅</div>
-        <div style="font-size:12px;color:var(--light);margin-top:3px;">步行500m范围内 · 共6家</div>
+        <div style="font-size:12px;color:var(--light);margin-top:3px;" id="solo-panel-meta">步行500m范围内</div>
       </div>
       <div style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;scrollbar-width:none;" id="solo-list"></div>
     </div>
@@ -904,14 +1143,15 @@ footer strong { color:rgba(255,255,255,0.8); }
 
 <script>
 // ===== RESTAURANT DATA =====
-// distances: [我, 小李, 阿明, 晓彤] 到该餐厅的步行分钟数
 const restaurants = [
-  { name:'老码头黄焖鸡', emoji:'🍜', color:'c1', rating:4.8, dist:'步行8分钟', price:'¥22', distances:[8,12,15,6], discount:'出示学生证 · 米饭免费续', open:true, tags:['快出餐','有插座','安静','一人食'], crowd:'本校 342 人去过', dishes:[{emoji:'🍗',name:'黄焖鸡套餐',price:'¥18'},{emoji:'🥚',name:'溏心蛋',price:'¥3'},{emoji:'🍚',name:'炒饭',price:'¥8'}], reviews:[{name:'陈同学',school:'本校 · 数学院',text:'黄焖鸡超好吃！汤汁浇饭绝了，学生证免费加饭真的太贴心了。'},{name:'小李',school:'本校 · 软件工程',text:'离宿舍近，出餐很快，考试前经常来。'}] },
-  { name:'川渝老火锅', emoji:'🍲', color:'c2', rating:4.6, dist:'步行15分钟', price:'¥45', distances:[15,18,22,12], discount:'周一至周四 学生证享 9 折', open:true, tags:['聚餐首选','氛围感','辣'], crowd:'本校 208 人去过', dishes:[{emoji:'🥩',name:'肥牛卷',price:'¥28'},{emoji:'🫕',name:'鸳鸯锅底',price:'¥38'},{emoji:'🐄',name:'毛肚',price:'¥22'}], reviews:[{name:'王同学',school:'本校 · 经管学院',text:'辣度可以自选，朋友聚餐首选！服务员态度好，不催促。'},{name:'阿杰',school:'本校 · 机械工程',text:'学生证打折很实惠，环境也挺好的。'}] },
-  { name:'绿野鲜食轻食碗', emoji:'🥗', color:'c3', rating:4.7, dist:'步行5分钟', price:'¥28', distances:[5,8,12,4], discount:'关注公众号 · 首单立减 5 元', open:true, tags:['健康','轻食','拍照好看'], crowd:'本校 156 人去过', dishes:[{emoji:'🥗',name:'藜麦沙拉',price:'¥26'},{emoji:'🍱',name:'低卡饭团',price:'¥18'},{emoji:'🥤',name:'燕麦奶昔',price:'¥15'}], reviews:[{name:'小雨',school:'本校 · 医学院',text:'减肥期间救星！食材新鲜，量还挺多的，不会饿。'},{name:'晓彤',school:'邻校 · 艺术设计',text:'颜值超高，拍照发朋友圈必备哈哈，味道也不错。'}] },
-  { name:'深夜拉面馆', emoji:'🍝', color:'c4', rating:4.5, dist:'步行12分钟', price:'¥30', distances:[12,15,18,10], discount:'凌晨 0 点后 · 全单 8.5 折', open:true, tags:['深夜营业','暖胃','安静'], crowd:'本校 89 人去过', dishes:[{emoji:'🍜',name:'浓汤拉面',price:'¥26'},{emoji:'🥚',name:'温泉蛋',price:'¥5'},{emoji:'🍢',name:'炸串拼盘',price:'¥18'}], reviews:[{name:'夜猫子阿明',school:'本校 · 计算机',text:'复习到凌晨2点去吃，汤头超浓，暖到心里，老板人超好。'},{name:'小夏',school:'本校 · 建筑学',text:'赶图夜猫子的续命选择，深夜折扣很良心！'}] },
-  { name:'老广记煲仔饭', emoji:'🍛', color:'c5', rating:4.9, dist:'步行20分钟', price:'¥35', distances:[20,22,25,18], discount:'学生套餐：煲仔饭 + 例汤 ¥28', open:false, tags:['口碑第一','值得排队','粤式'], crowd:'本校 510 人去过', dishes:[{emoji:'🍛',name:'腊味煲仔饭',price:'¥32'},{emoji:'🥩',name:'滑鸡煲仔饭',price:'¥30'},{emoji:'🍵',name:'例汤',price:'¥8'}], reviews:[{name:'Kevin',school:'本校 · 金融学',text:'全校评分最高不是吹的！锅底锅巴超香，每次排队都值得。'},{name:'南南',school:'邻校 · 新闻学',text:'值得专门走过来，学生套餐性价比真的高，汤也很鲜。'}] },
-  { name:'来一碗米线', emoji:'🍲', color:'c6', rating:4.4, dist:'步行10分钟', price:'¥18', distances:[10,13,16,8], discount:'学生证 · 加汤免费', open:true, tags:['实惠','快','云南风味'], crowd:'本校 127 人去过', dishes:[{emoji:'🍲',name:'过桥米线',price:'¥16'},{emoji:'🌶',name:'红油米线',price:'¥14'},{emoji:'🥬',name:'卤蛋小菜',price:'¥4'}], reviews:[{name:'小张',school:'本校 · 化工学院',text:'月底穷的时候最爱来，又便宜又好吃，汤底很鲜。'},{name:'燕子',school:'本校 · 教育学院',text:'云南人表示这家还挺正宗的，比外面贵的那些好吃多了。'}] },
+  { name:'老码头黄焖鸡', emoji:'🍜', color:'c1', img:'https://images.unsplash.com/photo-1741241857887-321f7fbcacf2?w=400&h=300&fit=crop&auto=format', rating:4.8, dist:'步行8分钟', price:'¥22', discount:'出示学生证 · 米饭免费续', open:true, tags:['快出餐','有插座','一人食','本周爆款'], crowd:'本校 342 人去过', dishes:[{emoji:'🍗',name:'黄焖鸡套餐',price:'¥18'},{emoji:'🥚',name:'溏心蛋',price:'¥3'},{emoji:'🍚',name:'炒饭',price:'¥8'}], reviews:[{name:'陈同学',school:'本校 · 数学院',text:'黄焖鸡超好吃！汤汁浇饭绝了，学生证免费加饭真的太贴心了。'},{name:'小李',school:'本校 · 软件工程',text:'离宿舍近，出餐很快，考试前经常来。'}] },
+  { name:'川渝老火锅', emoji:'🍲', color:'c2', img:'https://images.unsplash.com/photo-1742038876942-74ed91df5acc?w=400&h=300&fit=crop&auto=format', rating:4.6, dist:'步行15分钟', price:'¥45', discount:'周一至周四 学生证享 9 折', open:true, tags:['聚餐首选','氛围感','辣','拍照好看','本周爆款'], crowd:'本校 208 人去过', dishes:[{emoji:'🥩',name:'肥牛卷',price:'¥28'},{emoji:'🫕',name:'鸳鸯锅底',price:'¥38'},{emoji:'🐄',name:'毛肚',price:'¥22'}], reviews:[{name:'王同学',school:'本校 · 经管学院',text:'辣度可以自选，朋友聚餐首选！服务员态度好，不催促。'},{name:'阿杰',school:'本校 · 机械工程',text:'学生证打折很实惠，环境也挺好的。'}] },
+  { name:'绿野鲜食轻食碗', emoji:'🥗', color:'c3', img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop&auto=format', rating:4.7, dist:'步行5分钟', price:'¥28', discount:'关注公众号 · 首单立减 5 元', open:true, tags:['健康','轻食','低卡','拍照好看','新开业'], crowd:'本校 156 人去过', dishes:[{emoji:'🥗',name:'藜麦沙拉',price:'¥26'},{emoji:'🍱',name:'低卡饭团',price:'¥18'},{emoji:'🥤',name:'燕麦奶昔',price:'¥15'}], reviews:[{name:'小雨',school:'本校 · 医学院',text:'减肥期间救星！食材新鲜，量还挺多的，不会饿。'},{name:'晓彤',school:'邻校 · 艺术设计',text:'颜值超高，拍照发朋友圈必备哈哈，味道也不错。'}] },
+  { name:'深夜拉面馆', emoji:'🍝', color:'c4', img:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop&auto=format', rating:4.5, dist:'步行12分钟', price:'¥30', discount:'凌晨 0 点后 · 全单 8.5 折', open:true, tags:['深夜营业','暖胃'], crowd:'本校 89 人去过', dishes:[{emoji:'🍜',name:'浓汤拉面',price:'¥26'},{emoji:'🥚',name:'温泉蛋',price:'¥5'},{emoji:'🍢',name:'炸串拼盘',price:'¥18'}], reviews:[{name:'夜猫子阿明',school:'本校 · 计算机',text:'复习到凌晨2点去吃，汤头超浓，暖到心里，老板人超好。'},{name:'小夏',school:'本校 · 建筑学',text:'赶图夜猫子的续命选择，深夜折扣很良心！'}] },
+  { name:'老广记煲仔饭', emoji:'🍛', color:'c5', img:'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=300&fit=crop&auto=format', rating:4.9, dist:'步行20分钟', price:'¥35', discount:'学生套餐：煲仔饭 + 例汤 ¥28', open:false, tags:['口碑第一','值得排队','粤式','拍照好看','本周爆款'], crowd:'本校 510 人去过', dishes:[{emoji:'🍛',name:'腊味煲仔饭',price:'¥32'},{emoji:'🥩',name:'滑鸡煲仔饭',price:'¥30'},{emoji:'🍵',name:'例汤',price:'¥8'}], reviews:[{name:'Kevin',school:'本校 · 金融学',text:'全校评分最高不是吹的！锅底锅巴超香，每次排队都值得。'},{name:'南南',school:'邻校 · 新闻学',text:'值得专门走过来，学生套餐性价比真的高，汤也很鲜。'}] },
+  { name:'来一碗米线', emoji:'🍲', color:'c6', img:'https://images.unsplash.com/photo-1650066115827-5d6c9ad05fbb?w=400&h=300&fit=crop&auto=format', rating:4.4, dist:'步行10分钟', price:'¥18', discount:'学生证 · 加汤免费', open:true, tags:['实惠','快','云南风味','新开业'], crowd:'本校 127 人去过', dishes:[{emoji:'🍲',name:'过桥米线',price:'¥16'},{emoji:'🌶',name:'红油米线',price:'¥14'},{emoji:'🥬',name:'卤蛋小菜',price:'¥4'}], reviews:[{name:'小张',school:'本校 · 化工学院',text:'月底穷的时候最爱来，又便宜又好吃，汤底很鲜。'},{name:'燕子',school:'本校 · 教育学院',text:'云南人表示这家还挺正宗的，比外面贵的那些好吃多了。'}] },
+  { name:'芝麻咖啡·自习店', emoji:'☕', color:'c1', img:'https://images.unsplash.com/photo-1497515114629-f71d768fd07c?w=400&h=300&fit=crop&auto=format', rating:4.6, dist:'步行6分钟', price:'¥25', discount:'学生证 · 下午场 8 折', open:true, tags:['有插座','安静','不催离','拍照好看','新开业'], crowd:'本校 203 人去过', dishes:[{emoji:'☕',name:'美式咖啡',price:'¥18'},{emoji:'🧇',name:'松饼套餐',price:'¥28'},{emoji:'🍵',name:'抹茶拿铁',price:'¥22'}], reviews:[{name:'卷王小张',school:'本校 · 计算机',text:'找到宝藏了！插座超多，wifi快，不催人，期末必来。'},{name:'小林',school:'本校 · 设计学院',text:'环境好看，咖啡也好喝，适合长时间学习。'}] },
+  { name:'轻卡沙拉工坊', emoji:'🥙', color:'c3', img:'https://images.unsplash.com/photo-1546069901-d5bfd2cbfb1f?w=400&h=300&fit=crop&auto=format', rating:4.5, dist:'步行9分钟', price:'¥32', discount:'首单立减 8 元', open:true, tags:['健康','轻食','低卡','拍照好看','新开业'], crowd:'本校 78 人去过', dishes:[{emoji:'🥙',name:'鸡胸肉沙拉',price:'¥28'},{emoji:'🥤',name:'冷压果汁',price:'¥18'},{emoji:'🍳',name:'水波蛋套餐',price:'¥32'}], reviews:[{name:'减脂中',school:'本校 · 体育学院',text:'健身期间救星，食材新鲜，热量标注很清晰。'},{name:'小美',school:'本校 · 营养学',text:'专业级的健康餐，每天必吃！'}] },
 ];
 
 // ===== GROUP DATA =====
@@ -930,13 +1170,25 @@ const quickReplies = ['😋 都行都行','🌶 要辣的！','💸 便宜点的
 
 // ===== HOME FUNCTIONS =====
 function renderGrid(list) {
+  const thumbStyles = {
+    c1: 'background:linear-gradient(145deg,#FF8C42,#E8450A)',
+    c2: 'background:linear-gradient(145deg,#C0392B,#7B0D0D)',
+    c3: 'background:linear-gradient(145deg,#2ECC71,#1A7A4A)',
+    c4: 'background:linear-gradient(145deg,#8E44AD,#4A235A)',
+    c5: 'background:linear-gradient(145deg,#E6A817,#9A6A00)',
+    c6: 'background:linear-gradient(145deg,#2980B9,#1A4A7A)',
+  };
   document.getElementById('r-grid').innerHTML = list.map((r,i) => `
     <div class="r-card" onclick="openModal(${restaurants.indexOf(r)})" style="animation-delay:${i*0.06}s">
-      <div class="r-thumb ${r.color}">
-        <div class="r-thumb-badges">
+      <div class="r-thumb" style="${r.img ? '' : thumbStyles[r.color]}; position:relative; overflow:hidden;">
+        ${r.img ? `<img src="${r.img}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;${thumbStyles[r.color]}">
+          <div style="font-size:80px;filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25));transform:rotate(-5deg) scale(1.1)">${r.emoji}</div>
+        </div>` : `<div style="font-size:80px;filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25));transform:rotate(-5deg) scale(1.1)">${r.emoji}</div>`}
+        <div class="r-thumb-badges" style="position:absolute;top:10px;left:10px;right:10px;">
           <span class="badge badge-deal">学生优惠</span>
           <span class="badge ${r.open?'badge-open':'badge-closed'}">${r.open?'营业中':'已打烊'}</span>
-        </div>${r.emoji}
+        </div>
       </div>
       <div class="r-body">
         <div class="r-name">${r.name}</div>
@@ -951,36 +1203,30 @@ function renderGrid(list) {
 function filterScene(el, scene) {
   document.querySelectorAll('.hero-scene').forEach(s=>s.classList.remove('active'));
   el.classList.add('active');
-  const isGroup = scene === '多人聚餐';
-  document.getElementById('group-btn').style.display = isGroup ? 'flex' : 'none';
-  if(isGroup) {
-    document.getElementById('content-title').textContent = '适合多人聚餐';
-    document.getElementById('content-meta').textContent = '2人以上 · 氛围感好 · 可拼桌';
-    renderGrid(restaurants.filter(r=>r.tags.some(t=>['聚餐首选','氛围感','多人聚餐'].includes(t))).concat(restaurants.slice(0,2)));
-  } else if(scene === '懒得出门') {
-    document.getElementById('content-title').textContent = '懒得出门';
-    document.getElementById('content-meta').textContent = '外卖配送 · 宿舍直达';
-    renderGrid(restaurants);
-  } else if(scene === '喝一杯') {
-    document.getElementById('content-title').textContent = '喝一杯';
-    document.getElementById('content-meta').textContent = '咖啡 · 奶茶 · 果茶';
-    renderGrid(restaurants.slice(2,5));
-  } else if(scene === '一人食') {
-    document.getElementById('content-title').textContent = '一人食';
-    document.getElementById('content-meta').textContent = '安静 · 快出餐 · 不尴尬';
-    renderGrid(restaurants.filter(r=>r.tags.includes('一人食')||r.tags.includes('安静')||r.tags.includes('快出餐')));
-  } else {
-    document.getElementById('content-title').textContent = '附近餐厅';
-    document.getElementById('content-meta').textContent = '共找到 6 家 · 1km 范围内';
-    renderGrid(restaurants);
-  }
+  // sync sidebar scene
+  activeScene = scene;
+  document.querySelectorAll('#scene-opts .filter-opt').forEach(o => {
+    o.classList.toggle('active', o.dataset.scene === scene);
+  });
+  applyFilters();
   document.querySelector('.main-layout').scrollIntoView({behavior:'smooth'});
 }
 
+let currentModal = 0;
 function openModal(i) {
+  currentModal = i;
   const r = restaurants[i];
   document.getElementById('modal-emoji').textContent = r.emoji;
   document.getElementById('modal-hero').className = `modal-hero ${r.color}`;
+  const modalImg = document.getElementById('modal-img');
+  if(r.img) {
+    modalImg.src = r.img;
+    modalImg.style.display = 'block';
+    document.getElementById('modal-emoji').style.opacity = '0.15';
+  } else {
+    modalImg.style.display = 'none';
+    document.getElementById('modal-emoji').style.opacity = '1';
+  }
   document.getElementById('modal-name').textContent = r.name;
   document.getElementById('modal-rating').textContent = r.rating;
   document.getElementById('modal-dist').textContent = r.dist;
@@ -998,7 +1244,7 @@ function closeModalOnBg(e) { if(e.target===document.getElementById('modal-overla
 function toggleFav() { const b=document.getElementById('modal-fav'); b.textContent=b.textContent==='🤍'?'❤️':'🤍'; }
 
 // ===== SCREEN SWITCHING =====
-function showGroupScreen() {
+function showGroupScreen(fromHistory) {
   hideAllScreens();
   document.getElementById('screen-group').classList.add('active');
   document.getElementById('group-topbar').style.display = 'flex';
@@ -1007,27 +1253,49 @@ function showGroupScreen() {
   renderVoteList();
   renderQuickChips();
   renderInitMsgs();
+  setTimeout(renderSVGMap, 50);
+  if(!fromHistory) pushHistory(showGroupScreen);
   window.scrollTo(0,0);
 }
 
-function showHome() {
+// ===== PAGE HISTORY =====
+const pageHistory = [];
+
+function pushHistory(fn) {
+  pageHistory.push(fn);
+}
+
+function goBack() {
+  if(pageHistory.length > 1) {
+    pageHistory.pop(); // remove current
+    const prev = pageHistory[pageHistory.length - 1];
+    prev(true); // true = from history, don't push again
+  } else {
+    showHome();
+  }
+}
+
+function showHome(fromHistory) {
   hideAllScreens();
   const el = document.getElementById('screen-home');
   el.classList.add('active'); el.style.display = 'block';
+  document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.nav-link')[0].classList.add('active');
+  if(!fromHistory) { pageHistory.length = 0; pushHistory(showHome); }
   window.scrollTo(0,0);
 }
 
 const topicData = {
-  hot:     { emoji:'🔥', title:'本周最热', desc:'同学最爱去的地方 · 1,204人打卡', bg:'linear-gradient(135deg,#E8450A,#FF6B35)', filter: r => true },
+  hot:     { emoji:'🔥', title:'本周最热', desc:'同学最爱去的地方 · 1,204人打卡', bg:'linear-gradient(135deg,#E8450A,#FF6B35)', filter: r => r.tags.includes('本周爆款') },
   night:   { emoji:'🌙', title:'深夜食堂', desc:'凌晨亮着灯的地方 · 营业至02:00', bg:'linear-gradient(135deg,#1A0F00,#3D2410)', filter: r => r.tags.includes('深夜营业') },
-  healthy: { emoji:'🥗', title:'健康餐', desc:'轻食·沙拉·低卡', bg:'linear-gradient(135deg,#B7770D,#F5C518)', filter: r => r.tags.some(t=>['健康','轻食'].includes(t)) },
+  healthy: { emoji:'🥗', title:'健康餐', desc:'轻食·沙拉·低卡', bg:'linear-gradient(135deg,#B7770D,#F5C518)', filter: r => r.tags.includes('健康') || r.tags.includes('轻食') || r.tags.includes('低卡') },
   pretty:  { emoji:'📸', title:'漂亮饭', desc:'好看又好吃 · 拍照打卡推荐', bg:'linear-gradient(135deg,#5B2D8E,#9B6BF2)', filter: r => r.tags.includes('拍照好看') || r.tags.includes('氛围感') },
-  new:     { emoji:'🆕', title:'新开的店', desc:'开业优惠别错过 · 本月新增8家', bg:'linear-gradient(135deg,#1A5276,#2980B9)', filter: r => true },
-  study:   { emoji:'💻', title:'适合学习的地方', desc:'有插座·安静·不催离', bg:'linear-gradient(135deg,#2C3E50,#4A6741)', filter: r => r.tags.includes('有插座') || r.tags.includes('安静') },
+  new:     { emoji:'🆕', title:'新开的店', desc:'开业优惠别错过 · 本月新增8家', bg:'linear-gradient(135deg,#1A5276,#2980B9)', filter: r => r.tags.includes('新开业') },
+  study:   { emoji:'💻', title:'适合学习的地方', desc:'有插座·安静·不催离', bg:'linear-gradient(135deg,#2C3E50,#4A6741)', filter: r => r.tags.includes('有插座') && r.tags.includes('安静') || r.tags.includes('不催离') },
 };
 
 function hideAllScreens() {
-  ['screen-home','screen-discover','screen-topic','screen-map'].forEach(id => {
+  ['screen-home','screen-discover','screen-topic','screen-map','screen-my'].forEach(id => {
     const el = document.getElementById(id);
     if(el) { el.classList.remove('active'); el.style.display = 'none'; }
   });
@@ -1035,22 +1303,24 @@ function hideAllScreens() {
   document.getElementById('group-topbar').style.display = 'none';
 }
 
-function showDiscover() {
+function showDiscover(fromHistory) {
   hideAllScreens();
   const el = document.getElementById('screen-discover');
   el.classList.add('active'); el.style.display = 'block';
   document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));
   document.querySelectorAll('.nav-link')[1].classList.add('active');
+  if(!fromHistory) pushHistory(showDiscover);
   window.scrollTo(0,0);
 }
 
-function showTopicPage(key) {
+function showTopicPage(key, fromHistory) {
   const t = topicData[key];
   hideAllScreens();
   const el = document.getElementById('screen-topic');
   el.classList.add('active'); el.style.display = 'block';
   document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));
   document.querySelectorAll('.nav-link')[1].classList.add('active');
+  if(!fromHistory) pushHistory((fh) => showTopicPage(key, fh));
 
   document.getElementById('topic-breadcrumb').textContent = t.title;
   document.getElementById('topic-hero').style.background = t.bg;
@@ -1060,13 +1330,25 @@ function showTopicPage(key) {
 
   const filtered = restaurants.filter(t.filter);
   document.getElementById('topic-count').textContent = `共 ${filtered.length} 家餐厅`;
+  const thumbStyles2 = {
+    c1: 'background:linear-gradient(145deg,#FF8C42,#E8450A)',
+    c2: 'background:linear-gradient(145deg,#C0392B,#7B0D0D)',
+    c3: 'background:linear-gradient(145deg,#2ECC71,#1A7A4A)',
+    c4: 'background:linear-gradient(145deg,#8E44AD,#4A235A)',
+    c5: 'background:linear-gradient(145deg,#E6A817,#9A6A00)',
+    c6: 'background:linear-gradient(145deg,#2980B9,#1A4A7A)',
+  };
   document.getElementById('topic-grid').innerHTML = filtered.map((r,i) => `
     <div class="r-card" onclick="openModal(${restaurants.indexOf(r)})" style="animation-delay:${i*0.06}s">
-      <div class="r-thumb ${r.color}">
-        <div class="r-thumb-badges">
+      <div class="r-thumb" style="${r.img ? '' : thumbStyles2[r.color]}; position:relative; overflow:hidden;">
+        ${r.img ? `<img src="${r.img}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;${thumbStyles2[r.color]}">
+          <div style="font-size:80px;filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25));transform:rotate(-5deg) scale(1.1)">${r.emoji}</div>
+        </div>` : `<div style="font-size:80px;filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25));transform:rotate(-5deg) scale(1.1)">${r.emoji}</div>`}
+        <div class="r-thumb-badges" style="position:absolute;top:10px;left:10px;right:10px;">
           <span class="badge badge-deal">学生优惠</span>
           <span class="badge ${r.open?'badge-open':'badge-closed'}">${r.open?'营业中':'已打烊'}</span>
-        </div>${r.emoji}
+        </div>
       </div>
       <div class="r-body">
         <div class="r-name">${r.name}</div>
@@ -1079,11 +1361,99 @@ function showTopicPage(key) {
   window.scrollTo(0,0);
 }
 
-function showMapScreen() {
+// solo map restaurant positions (SVG 800×600 coords)
+const soloMapRestaurants = [
+  { idx:0, x:100, y:450 },
+  { idx:1, x:200, y:460 },
+  { idx:2, x:320, y:445 },
+  { idx:3, x:580, y:465 },
+  { idx:4, x:460, y:455 },
+  { idx:5, x:700, y:458 },
+  { idx:6, x:260, y:420 }, // 咖啡
+  { idx:7, x:400, y:438 }, // 沙拉
+];
+const MY_X = 310, MY_Y = 310;
+let navTarget = null;
+
+function renderSoloMap() {
+  const g = document.getElementById('solo-restaurant-markers');
+  if(!g) return;
+  g.innerHTML = soloMapRestaurants.map(pos => {
+    const r = restaurants[pos.idx];
+    if(!r) return '';
+    const isNav = navTarget === pos.idx;
+    const bg = isNav ? '#E8450A' : 'white';
+    const textColor = isNav ? 'white' : '#5C4A30';
+    const border = isNav ? '#C0340A' : '#D4C8B8';
+    return `<g onclick="showSoloCard(${pos.idx})" style="cursor:pointer" transform="translate(${pos.x},${pos.y})">
+      <rect x="-40" y="-32" width="80" height="32" rx="8" fill="${bg}" stroke="${border}" stroke-width="${isNav?2:1.5}"/>
+      <text x="-22" y="-14" font-size="14" font-family="serif">${r.emoji}</text>
+      <text x="-4" y="-15" font-size="9" font-weight="700" fill="${textColor}" font-family="Noto Sans SC,sans-serif">${r.name.slice(0,4)}</text>
+      <text x="-4" y="-5" font-size="8" fill="${textColor}" opacity="0.7" font-family="Noto Sans SC,sans-serif">${r.dist}</text>
+      <polygon points="0,0 -5,-7 5,-7" fill="${bg}" stroke="${border}" stroke-width="1.5"/>
+    </g>`;
+  }).join('');
+}
+
+function startNavTo(restaurantIdx) {
+  closeModal();
+  navTarget = restaurantIdx;
+  const r = restaurants[restaurantIdx];
+  const pos = soloMapRestaurants.find(p => p.idx === restaurantIdx);
+
+  // switch to map screen
+  setNav(document.querySelector('.nav-link:nth-child(3)'));
+  showMapScreen();
+
+  if(!pos) return;
+
+  // draw animated path
+  const pathG = document.getElementById('nav-path-layer');
+  const mx = (MY_X + pos.x) / 2;
+  const my = (MY_Y + pos.y) / 2 - 40;
+  pathG.innerHTML = `
+    <path d="M${MY_X},${MY_Y} Q${mx},${my} ${pos.x},${pos.y}"
+      fill="none" stroke="#E8450A" stroke-width="4" stroke-linecap="round"
+      stroke-dasharray="8,5" opacity="0.85">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="${MY_X}" cy="${MY_Y}" r="6" fill="#E8450A"/>
+    <circle cx="${pos.x}" cy="${pos.y}" r="8" fill="#E8450A" stroke="white" stroke-width="2">
+      <animate attributeName="r" values="7;11;7" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+  `;
+
+  // show banner
+  const banner = document.getElementById('nav-banner');
+  banner.style.display = 'flex';
+  document.getElementById('nav-banner-icon').textContent = r.emoji;
+  document.getElementById('nav-banner-name').textContent = r.name;
+  document.getElementById('nav-banner-meta').textContent = `步行约${r.dist} · 路线已规划`;
+
+  // topbar
+  document.getElementById('map-topbar-title').textContent = `🧭 导航至 ${r.name}`;
+  document.getElementById('nav-cancel-btn').style.display = 'flex';
+
+  renderSoloMap();
+}
+
+function cancelNav() {
+  navTarget = null;
+  document.getElementById('nav-path-layer').innerHTML = '';
+  document.getElementById('nav-banner').style.display = 'none';
+  document.getElementById('map-topbar-title').textContent = '🗺️ 周边地图';
+  document.getElementById('nav-cancel-btn').style.display = 'none';
+  renderSoloMap();
+}
+
+function showMapScreen(fromHistory) {
   hideAllScreens();
   const el = document.getElementById('screen-map');
   el.style.display = 'flex';
+  setTimeout(renderSoloMap, 30);
   renderSoloList();
+  document.getElementById('solo-panel-meta').textContent = `步行500m范围内 · 共${restaurants.length}家`;
+  if(!fromHistory) pushHistory(showMapScreen);
   window.scrollTo(0,0);
 }
 
@@ -1131,7 +1501,6 @@ function renderMembersVoteList() {
 function renderVoteList() {
   const maxVotes = Math.max(...gRestaurants.map(r=>r.votes.length), 1);
   const winnerIdx = gRestaurants.reduce((a,b,i,arr)=>arr[i].votes.length>arr[a].votes.length?i:a,0);
-  const distStr = (r) => r.distances ? members.map((m,mi)=>`${m.name}${r.distances[mi]}分`).join(' ') : r.dist;
   document.getElementById('vote-list').innerHTML = gRestaurants.map((r,i)=>{
     const isWinner = r.votes.length>0 && i===winnerIdx;
     const isMyVote = myVote===i;
@@ -1141,7 +1510,7 @@ function renderVoteList() {
       ${isWinner&&r.votes.length>0?'<div class="winner-badge">🏆 领先</div>':''}
       <div class="vote-card-top">
         <div class="vote-card-emoji">${r.emoji}</div>
-        <div class="vote-card-info"><div class="vote-card-name">${r.name}</div><div class="vote-card-meta">${distStr(r)} · 人均${r.price}</div></div>
+        <div class="vote-card-info"><div class="vote-card-name">${r.name}</div><div class="vote-card-meta">${r.dist} · 人均${r.price}</div></div>
         <div class="vote-count-wrap"><div class="vote-count ${r.votes.length===0?'zero':''}">${r.votes.length}</div><div class="vote-count-label">票</div></div>
       </div>
       <div class="vote-bar-wrap"><div class="vote-bar-track"><div class="vote-bar-fill" style="width:${r.votes.length===0?0:pct}%"></div></div></div>
@@ -1154,15 +1523,12 @@ function renderVoteList() {
     const el=document.getElementById(`pv-${i}`);
     if(el){el.textContent=r.votes.length+'票';el.className='pin-votes'+(r.votes.length===0?' zero':'');}
     const pin=document.getElementById(`pin-${i}`);
-    if(pin) {
-      pin.classList.toggle('voted',r.votes.length>0);
-      const distEl=pin.querySelector('.pin-dist');
-      if(distEl && r.distances) distEl.title=members.map((m,mi)=>`${m.name}：步行${r.distances[mi]}分钟`).join('\n');
-    }
+    if(pin) pin.classList.toggle('voted',r.votes.length>0);
   });
 }
 
 function castVote(idx) {
+  selectedPin = idx;
   if(myVote===idx) {
     gRestaurants[idx].votes=gRestaurants[idx].votes.filter(v=>v!==0);
     myVote=null; members[0].voted=false; members[0].choice=null;
@@ -1175,7 +1541,7 @@ function castVote(idx) {
     addChatMsg(0,`我投 ${gRestaurants[idx].name}，${gRestaurants[idx].dist}，人均${gRestaurants[idx].price}`);
     simulateVotes(idx);
   }
-  renderVoteList(); renderMembersVoteList();
+  renderVoteList(); renderMembersVoteList(); renderSVGMap();
 }
 
 function simulateVotes(myIdx) {
@@ -1183,18 +1549,18 @@ function simulateVotes(myIdx) {
   [2,3].forEach(mi=>{
     if(members[mi].voted){gRestaurants[members[mi].choice].votes=gRestaurants[members[mi].choice].votes.filter(v=>v!==mi);members[mi].voted=false;members[mi].choice=null;}
   });
-  renderVoteList(); renderMembersVoteList();
+  renderVoteList(); renderMembersVoteList(); renderSVGMap();
   simTimeout = setTimeout(()=>{
-    const choice=Math.random()>0.5?myIdx:(myIdx+1)%gRestaurants.length;
+    const choice=Math.random()>0.5?myIdx:(myIdx+1)%5;
     members[2].voted=true; members[2].choice=choice; gRestaurants[choice].votes.push(2);
     addSystemMsg(`阿明 投票了 · ${gRestaurants[choice].name} ${gRestaurants[choice].emoji}`);
     addChatMsg(2, choice===myIdx?'我也投这家！':`我想吃${gRestaurants[choice].name}，感觉不错`);
-    renderVoteList(); renderMembersVoteList();
+    renderVoteList(); renderMembersVoteList(); renderSVGMap();
     setTimeout(()=>{
       members[3].voted=true; members[3].choice=myIdx; gRestaurants[myIdx].votes.push(3);
       addSystemMsg(`晓彤 投票了 · ${gRestaurants[myIdx].name} ${gRestaurants[myIdx].emoji}`);
       addChatMsg(3,'好的都听你们的！😋');
-      renderVoteList(); renderMembersVoteList();
+      renderVoteList(); renderMembersVoteList(); renderSVGMap();
     },2800);
   },1500);
 }
@@ -1260,16 +1626,298 @@ function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMs
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
 
 // ===== MAP =====
+// All coordinates are in SVG viewBox space (800×560)
+const mapUsers = [
+  { name:'我',  short:'我', color:'#E8450A', x:300, y:255, label:'A栋302' },
+  { name:'小李', short:'小', color:'#2980B9', x:360, y:228, label:'A栋405' },
+  { name:'阿明', short:'阿', color:'#27AE60', x:148, y:278, label:'B栋201' },
+  { name:'晓彤', short:'晓', color:'#8E44AD', x:390, y:268, label:'A栋108' },
+];
+const mapRestaurants = [
+  { idx:0, emoji:'🍜', name:'黄焖鸡',  x:80,  y:445, dist:'8分钟',  memberDist:['8分钟','10分钟','14分钟','11分钟'] },
+  { idx:1, emoji:'🍲', name:'川渝火锅', x:185, y:455, dist:'15分钟', memberDist:['15分钟','16分钟','12分钟','17分钟'] },
+  { idx:2, emoji:'🥗', name:'轻食碗',  x:310, y:440, dist:'5分钟',  memberDist:['5分钟','7分钟','11分钟','8分钟'] },
+  { idx:3, emoji:'🍛', name:'煲仔饭',  x:480, y:450, dist:'20分钟', memberDist:['20分钟','18分钟','22分钟','17分钟'] },
+  { idx:4, emoji:'🍝', name:'拉面馆',  x:620, y:458, dist:'12分钟', memberDist:['16分钟','14分钟','20分钟','13分钟'] },
+];
+let selectedPin = null;
+
+function selectPin(idx) {
+  selectedPin = selectedPin === idx ? null : idx;
+  renderSVGMap();
+  // update vote card highlight
+  document.querySelectorAll('.vote-card').forEach((c,i) => {
+    c.style.outline = (i === idx && selectedPin !== null) ? '2px solid var(--orange)' : '';
+  });
+}
+
+function renderSVGMap() {
+  const svg = document.getElementById('group-map-svg');
+  if(!svg) return;
+
+  // distance lines — only for selected restaurant
+  const linesG = document.getElementById('distance-lines');
+  if(selectedPin !== null) {
+    const r = mapRestaurants[selectedPin];
+    linesG.innerHTML = mapUsers.map((u, ui) => {
+      const mx = (u.x + r.x) / 2;
+      const my = (u.y + r.y) / 2;
+      return `
+        <line x1="${u.x}" y1="${u.y}" x2="${r.x}" y2="${r.y}" stroke="${u.color}" stroke-width="2" stroke-dasharray="5,3" opacity="0.6"/>
+        <rect x="${mx-18}" y="${my-9}" width="36" height="16" rx="5" fill="${u.color}" opacity="0.92"/>
+        <text x="${mx}" y="${my+3}" text-anchor="middle" font-size="8.5" fill="white" font-weight="700" font-family="Noto Sans SC,sans-serif">${r.memberDist[ui]}</text>
+      `;
+    }).join('');
+  } else {
+    linesG.innerHTML = '';
+  }
+
+  // restaurant markers
+  const rG = document.getElementById('restaurant-markers');
+  const winnerIdx = gRestaurants.reduce((a,b,i,arr)=>arr[i].votes.length>arr[a].votes.length?i:a,0);
+  rG.innerHTML = mapRestaurants.map(r => {
+    const votes = gRestaurants[r.idx].votes.length;
+    const isWinner = votes > 0 && r.idx === winnerIdx;
+    const hasVotes = votes > 0;
+    const isSelected = selectedPin === r.idx;
+    const bg = isSelected ? '#1C1007' : isWinner ? '#F5C518' : hasVotes ? '#E8450A' : 'white';
+    const textColor = isSelected ? 'white' : isWinner ? '#1C1007' : hasVotes ? 'white' : '#5C4A30';
+    const borderColor = isSelected ? '#1C1007' : isWinner ? '#E6B800' : hasVotes ? '#C0340A' : '#D4C8B8';
+    return `<g onclick="selectPin(${r.idx})" style="cursor:pointer" transform="translate(${r.x},${r.y})">
+      <rect x="-44" y="-36" width="88" height="36" rx="9" fill="${bg}" stroke="${borderColor}" stroke-width="${isSelected?2.5:1.5}"/>
+      <text x="-28" y="-18" font-size="15" font-family="serif">${r.emoji}</text>
+      <text x="-8" y="-19" font-size="9.5" font-weight="700" fill="${textColor}" font-family="Noto Sans SC,sans-serif">${r.name}</text>
+      <text x="-8" y="-8" font-size="8.5" fill="${textColor}" opacity="0.75" font-family="Noto Sans SC,sans-serif">步行${r.dist}</text>
+      ${votes > 0 ? `<rect x="26" y="-48" width="18" height="15" rx="5" fill="#E8450A"/><text x="35" y="-37" text-anchor="middle" font-size="9" fill="white" font-weight="700" font-family="sans-serif">${votes}</text>` : ''}
+      <polygon points="0,0 -6,-9 6,-9" fill="${bg}" stroke="${borderColor}" stroke-width="1.5"/>
+    </g>`;
+  }).join('');
+
+  // user markers
+  const uG = document.getElementById('user-markers');
+  uG.innerHTML = mapUsers.map((u,i) => {
+    const dist = selectedPin !== null ? mapRestaurants[selectedPin].memberDist[i] : null;
+    return `<g transform="translate(${u.x},${u.y})">
+      ${i===0 ? `<circle r="22" fill="${u.color}" opacity="0.15"><animate attributeName="r" values="18;26;18" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/></circle>` : ''}
+      <circle r="16" fill="${u.color}" stroke="white" stroke-width="3"/>
+      <text text-anchor="middle" y="5" font-size="11" font-weight="700" fill="white" font-family="Noto Sans SC,sans-serif">${u.short}</text>
+      <rect x="-28" y="-38" width="56" height="18" rx="5" fill="${u.color}" opacity="0.9"/>
+      <text text-anchor="middle" x="0" y="-26" font-size="8" fill="white" font-family="Noto Sans SC,sans-serif">${u.name==='我'?'我·'+u.label:u.name+'·'+u.label}</text>
+    </g>`;
+  }).join('');
+
+  if(!document.getElementById('map-shadow-filter')) {
+    const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+    defs.id = 'map-shadow-filter';
+    defs.innerHTML = `<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>`;
+    svg.insertBefore(defs, svg.firstChild);
+  }
+}
+
 function toggleRange(btn) {
-  const c=document.getElementById('range-circle');
-  const v=c.style.display!=='none'; c.style.display=v?'none':'block'; btn.classList.toggle('active',!v);
+  const c = document.getElementById('range-circle-svg');
+  const visible = c.style.display !== 'none';
+  c.style.display = visible ? 'none' : '';
+  btn.classList.toggle('active', !visible);
+}
+
+function showMyScreen(fromHistory) {
+  hideAllScreens();
+  const el = document.getElementById('screen-my');
+  el.classList.add('active');
+  el.style.display = 'block';
+  renderFavGrid();
+  if(!fromHistory) pushHistory(showMyScreen);
+  window.scrollTo(0,0);
+}
+
+function renderFavGrid() {
+  const favs = restaurants.filter(r => r.fav);
+  const grid = document.getElementById('fav-grid');
+  const empty = document.getElementById('fav-empty');
+  if(!grid) return;
+  if(favs.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    grid.style.display = 'grid';
+    empty.style.display = 'none';
+    grid.innerHTML = favs.map((r,i) => {
+      const ri = restaurants.indexOf(r);
+      return `<div onclick="openModal(${ri})" style="border-radius:16px;border:1.5px solid var(--border);overflow:hidden;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div class="${r.color}" style="height:64px;display:flex;align-items:center;justify-content:center;font-size:32px;">${r.emoji}</div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:13px;font-weight:700;margin-bottom:2px;">${r.name}</div>
+          <div style="font-size:11px;color:var(--light);">${r.dist} · 人均${r.price}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function selectLocation(el, name) {
+  // reset auto
+  const auto = document.getElementById('loc-auto');
+  auto.style.border = '1.5px solid var(--border)';
+  auto.style.background = 'white';
+  auto.querySelector('div > div:first-child').style.color = 'var(--dark)';
+  auto.querySelector('div > div:last-child').style.color = 'var(--light)';
+  auto.querySelector('div > div:last-child').style.opacity = '1';
+  auto.lastElementChild.style.background = 'var(--border)';
+  // reset list items
+  document.querySelectorAll('#loc-btns > div').forEach(b => {
+    b.classList.remove('loc-active');
+    b.style.border = '1.5px solid var(--border)';
+    b.style.background = 'white';
+    b.querySelector('div:first-of-type').style.color = 'var(--dark)';
+    b.querySelector('div:first-of-type').style.fontWeight = 'normal';
+  });
+  // activate selected
+  if(el.id === 'loc-auto') {
+    el.style.border = '1.5px solid var(--orange)';
+    el.style.background = '#FEF0EA';
+    el.querySelector('div > div:first-child').style.color = 'var(--orange)';
+    el.lastElementChild.style.background = 'var(--orange)';
+    document.getElementById('loc-hint').innerHTML = `🛰 正在用 <strong>自动定位</strong> 计算距离`;
+  } else {
+    el.classList.add('loc-active');
+    el.style.border = '1.5px solid var(--orange)';
+    el.style.background = '#FEF0EA';
+    el.querySelector('div:first-of-type').style.color = 'var(--orange)';
+    el.querySelector('div:first-of-type').style.fontWeight = '600';
+    document.getElementById('loc-hint').innerHTML = `📍 正在以 <strong>${name}</strong> 为出发地计算距离`;
+  }
+  showToast(`出发地已切换：${name} 📍`);
+}
+
+function toggleCuisine(el) {
+  const active = el.style.background === 'rgb(254, 240, 234)';
+  el.style.background = active ? 'white' : '#FEF0EA';
+  el.style.borderColor = active ? 'var(--border)' : 'var(--orange)';
+  el.querySelector('div > div:first-child').style.color = active ? 'var(--dark)' : 'var(--orange)';
+  el.querySelector('div > div:last-child').style.color = active ? 'var(--light)' : 'var(--orange)';
+  el.querySelector('div > div:last-child').style.opacity = active ? '1' : '0.7';
+  if(!active) showToast('偏好已更新 ✓');
+}
+
+function selectBudget(el) {
+  el.closest('div').querySelectorAll(':scope > div').forEach(b => {
+    b.style.border = '1.5px solid var(--border)';
+    b.style.background = 'white';
+    b.style.color = 'var(--mid)';
+    b.style.fontWeight = 'normal';
+    b.querySelector('span') && (b.querySelector('span').style.color = 'var(--light)');
+    b.firstChild.textContent = b.firstChild.textContent.replace(' ✓','');
+  });
+  el.style.border = '1.5px solid var(--orange)';
+  el.style.background = '#FEF0EA';
+  el.style.color = 'var(--orange)';
+  el.style.fontWeight = '600';
+  el.firstChild.textContent = el.firstChild.textContent.replace(' ✓','') + ' ✓';
+  showToast('预算偏好已更新 💰');
 }
 
 // ===== MISC =====
 function setNav(el){document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
 function setSort(el){document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
-function toggleFilter(el){el.classList.toggle('active');}
-function togglePrice(el){document.querySelectorAll('.price-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+// ===== UNIFIED FILTER STATE =====
+let activeScene = '全部';
+const activePrices = new Set();   // e.g. "0-15", "15-30"
+const activeCuisines = new Set(); // e.g. "川湘", "轻食"
+
+// cuisine tag mapping
+const cuisineTagMap = {
+  '川湘': ['辣','川渝'],
+  '粤':   ['粤式','口碑第一'],
+  '面食': ['云南风味','暖胃'],
+  '日料': [],
+  '轻食': ['健康','轻食','低卡'],
+  '火锅': ['聚餐首选','氛围感'],
+  '咖啡': ['有插座','不催离'],
+};
+
+// scene tag mapping
+const sceneTagMap = {
+  '一人食':  r => r.tags.includes('一人食') || r.tags.includes('快出餐'),
+  '多人聚餐': r => r.tags.some(t => ['聚餐首选','氛围感'].includes(t)),
+  '深夜营业': r => r.tags.includes('深夜营业'),
+};
+
+function priceNum(str) { return parseInt(str.replace(/[¥,]/g,'')) || 0; }
+
+function applyFilters() {
+  let list = restaurants;
+
+  // 1. 场景筛选（单选，全部=不限）
+  if(activeScene !== '全部' && sceneTagMap[activeScene]) {
+    list = list.filter(sceneTagMap[activeScene]);
+  }
+
+  // 2. 价格筛选（多选，没选=不限）
+  if(activePrices.size > 0) {
+    list = list.filter(r => {
+      const p = priceNum(r.price);
+      for(const key of activePrices) {
+        const [mn, mx] = key.split('-').map(Number);
+        if(p >= mn && p <= mx) return true;
+      }
+      return false;
+    });
+  }
+
+  // 3. 菜系筛选（多选，没选=不限）
+  if(activeCuisines.size > 0) {
+    list = list.filter(r => {
+      for(const c of activeCuisines) {
+        const tags = cuisineTagMap[c] || [];
+        if(tags.some(t => r.tags.includes(t))) return true;
+        // fallback: name contains key
+        if(r.name.includes(c)) return true;
+      }
+      return false;
+    });
+  }
+
+  renderGrid(list);
+  const isGroup = activeScene === '多人聚餐';
+  document.getElementById('group-btn').style.display = isGroup ? 'flex' : 'none';
+  document.getElementById('content-title').textContent = activeScene === '全部' ? '附近餐厅' : activeScene;
+  document.getElementById('content-meta').textContent = `筛选结果 · 共 ${list.length} 家`;
+}
+
+function selectScene(el) {
+  document.querySelectorAll('#scene-opts .filter-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  activeScene = el.dataset.scene;
+  applyFilters();
+  document.querySelector('.main-layout').scrollIntoView({behavior:'smooth'});
+}
+
+function togglePrice(el) {
+  const key = el.dataset.min + '-' + el.dataset.max;
+  if(activePrices.has(key)) {
+    activePrices.delete(key);
+    el.classList.remove('active');
+  } else {
+    activePrices.add(key);
+    el.classList.add('active');
+  }
+  applyFilters();
+}
+
+function toggleCuisineFilter(el) {
+  const c = el.dataset.cuisine;
+  if(activeCuisines.has(c)) {
+    activeCuisines.delete(c);
+    el.classList.remove('active');
+  } else {
+    activeCuisines.add(c);
+    el.classList.add('active');
+  }
+  applyFilters();
+}
+
+function toggleFilter(el){el.classList.toggle('active');}  // legacy fallback
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
@@ -1341,6 +1989,170 @@ setInterval(() => goSlide((adIdx+1)%4), 3500);
 
 // ===== INIT =====
 renderGrid(restaurants);
+</script>
+
+<!-- ===== AI ASSISTANT ===== -->
+<style>
+.ai-fab { position:fixed; left:0; top:50%; transform:translateY(-50%); z-index:3000; width:36px; height:84px; border-radius:0 20px 20px 0; background:linear-gradient(180deg,#E8450A,#FF6B35); border:none; cursor:pointer; box-shadow:4px 0 20px rgba(232,69,10,0.35); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1); padding:0; }
+.ai-fab:hover { width:44px; box-shadow:6px 0 26px rgba(232,69,10,0.45); }
+.ai-fab.open { width:44px; box-shadow:6px 0 26px rgba(232,69,10,0.45); }
+.ai-fab-icon { font-size:17px; line-height:1; }
+.ai-fab-label { writing-mode:vertical-rl; text-orientation:mixed; font-size:10px; font-weight:700; color:white; letter-spacing:2px; font-family:"Noto Sans SC",sans-serif; opacity:0.9; }
+.ai-panel { position:fixed; left:48px; top:50%; transform:translateY(-50%) translateX(-12px) scale(0.95); z-index:3000; width:360px; background:white; border-radius:24px; box-shadow:0 24px 64px rgba(28,16,7,0.18); display:flex; flex-direction:column; overflow:hidden; opacity:0; pointer-events:none; transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1); max-height:540px; }
+.ai-panel.open { transform:translateY(-50%) translateX(0) scale(1); opacity:1; pointer-events:all; }
+.ai-panel-head { background:linear-gradient(135deg,#1C1007,#3D2410); padding:18px 20px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.ai-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#E8450A,#FF6B35); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.ai-panel-title { color:white; font-size:14px; font-weight:700; }
+.ai-panel-sub { color:rgba(255,255,255,0.5); font-size:11px; margin-top:2px; }
+.ai-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; scrollbar-width:none; }
+.ai-msg { max-width:85%; }
+.ai-msg.ai { align-self:flex-start; }
+.ai-msg.user { align-self:flex-end; }
+.ai-bubble { padding:10px 14px; border-radius:16px; font-size:13px; line-height:1.55; }
+.ai-msg.ai .ai-bubble { background:#F5F0EB; color:var(--dark); border-bottom-left-radius:4px; }
+.ai-msg.user .ai-bubble { background:linear-gradient(135deg,#E8450A,#FF6B35); color:white; border-bottom-right-radius:4px; }
+.ai-msg.ai .ai-bubble.loading { color:var(--light); font-style:italic; }
+.ai-suggestions { display:flex; flex-wrap:wrap; gap:6px; padding:0 16px 12px; flex-shrink:0; }
+.ai-chip { background:#FEF0EA; color:var(--orange); border:1px solid rgba(232,69,10,0.2); padding:6px 12px; border-radius:20px; font-size:12px; cursor:pointer; transition:all 0.15s; white-space:nowrap; font-family:'Noto Sans SC',sans-serif; }
+.ai-chip:hover { background:var(--orange); color:white; }
+.ai-input-row { display:flex; gap:8px; padding:12px 16px; border-top:1px solid var(--border); flex-shrink:0; }
+.ai-input { flex:1; border:1.5px solid var(--border); border-radius:12px; padding:9px 14px; font-size:13px; font-family:'Noto Sans SC',sans-serif; outline:none; resize:none; background:var(--cream); color:var(--dark); }
+.ai-input:focus { border-color:var(--orange); background:white; }
+.ai-send { width:36px; height:36px; border-radius:10px; background:var(--orange); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:white; font-size:16px; flex-shrink:0; transition:all 0.15s; }
+.ai-send:hover { background:#C0340A; }
+.ai-send:disabled { background:var(--border); cursor:not-allowed; }
+</style>
+
+<!-- FAB button -->
+<button class="ai-fab" id="ai-fab" onclick="toggleAI()" title="AI 助手">
+  <span class="ai-fab-icon">✨</span>
+  <span class="ai-fab-label">觅食助手</span>
+</button>
+
+<!-- AI panel -->
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-panel-head">
+    <div class="ai-avatar">🤖</div>
+    <div>
+      <div class="ai-panel-title">觅食助手</div>
+      <div class="ai-panel-sub">告诉我你的情况，帮你选今天吃什么</div>
+    </div>
+  </div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-msg ai">
+      <div class="ai-bubble">你好！我是觅食助手 🍜<br>告诉我你现在的情况，比如在哪、几个人、想吃什么，我来帮你选！</div>
+    </div>
+  </div>
+  <div class="ai-suggestions" id="ai-chips">
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">😴 深夜了还开着的</div>
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">💸 月底穷，20以内</div>
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">👥 四个人一起吃</div>
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">📚 边吃边学习</div>
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">🌶 想吃辣的</div>
+    <div class="ai-chip" onclick="sendAIChip(this.textContent)">🥗 减脂期吃什么</div>
+  </div>
+  <div class="ai-input-row">
+    <textarea class="ai-input" id="ai-input" placeholder="说说你的情况..." rows="1" onkeydown="handleAIKey(event)" oninput="autoResizeAI(this)"></textarea>
+    <button class="ai-send" id="ai-send" onclick="sendAIMsg()">↑</button>
+  </div>
+</div>
+
+<script>
+// ===== AI ASSISTANT =====
+let aiOpen = false;
+let aiLoading = false;
+
+function toggleAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('ai-fab').classList.toggle('open', aiOpen);
+  document.getElementById('ai-panel').classList.toggle('open', aiOpen);
+  if(aiOpen) setTimeout(() => document.getElementById('ai-input').focus(), 300);
+}
+
+function autoResizeAI(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 80) + 'px';
+}
+
+function handleAIKey(e) {
+  if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAIMsg(); }
+}
+
+function sendAIChip(text) {
+  document.getElementById('ai-input').value = text;
+  sendAIMsg();
+}
+
+function appendAIMsg(role, text, isLoading) {
+  const msgs = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className = `ai-msg ${role}`;
+  div.innerHTML = `<div class="ai-bubble${isLoading?' loading':''}">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+async function sendAIMsg() {
+  if(aiLoading) return;
+  const input = document.getElementById('ai-input');
+  const text = input.value.trim();
+  if(!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('ai-send').disabled = true;
+  aiLoading = true;
+
+  appendAIMsg('user', text);
+
+  // hide chips after first send
+  document.getElementById('ai-chips').style.display = 'none';
+
+  const loadingEl = appendAIMsg('ai', '正在思考...', true);
+
+  // Build context about available restaurants
+  const restaurantContext = restaurants.map(r =>
+    `- ${r.name}（${r.dist}，人均${r.price}，标签：${r.tags.join('/')}，${r.open?'营业中':'已打烊'}）`
+  ).join('\n');
+
+  const systemPrompt = `你是"觅食助手"，一个专为大学生设计的美食推荐AI。你的风格：亲切、简洁、有点俏皮，像朋友推荐一样。
+
+当前附近可选餐厅：
+${restaurantContext}
+
+规则：
+1. 根据用户描述的场景/需求，从上面的餐厅中推荐1-2家最合适的
+2. 说明推荐理由（一句话就够）
+3. 如果用户说深夜/凌晨，只推荐"已营业中"且有"深夜营业"标签的
+4. 回复控制在100字以内，语气自然，不要用列表符号
+5. 用中文回复`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || '抱歉，我暂时没想到好的推荐，试试直接用筛选？';
+    loadingEl.querySelector('.ai-bubble').textContent = reply;
+    loadingEl.querySelector('.ai-bubble').classList.remove('loading');
+  } catch(e) {
+    loadingEl.querySelector('.ai-bubble').textContent = '网络好像有点问题，稍后再试试吧 🙏';
+    loadingEl.querySelector('.ai-bubble').classList.remove('loading');
+  }
+
+  document.getElementById('ai-messages').scrollTop = 999999;
+  document.getElementById('ai-send').disabled = false;
+  aiLoading = false;
+}
 </script>
 </body>
 </html>
